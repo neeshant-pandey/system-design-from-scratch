@@ -11,6 +11,22 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
  */
 
 /**
+ * Unescape LaTeX special characters
+ * Converts \% to %, \$ to $, etc.
+ */
+function unescapeLatex(text) {
+  if (!text) return text;
+  return text
+    .replace(/\\%/g, '%')
+    .replace(/\\\$/g, '$')
+    .replace(/\\&/g, '&')
+    .replace(/\\#/g, '#')
+    .replace(/\\_/g, '_')
+    .replace(/\\~/g, '~')
+    .replace(/\\\^/g, '^');
+}
+
+/**
  * Parse LaTeX commands and convert to React elements
  */
 function parseLatexContent(latex) {
@@ -35,7 +51,7 @@ function parseLatexContent(latex) {
 
     // Handle sections
     if (line.startsWith('\\section{')) {
-      const content = extractBraceContent(line, '\\section{');
+      const content = unescapeLatex(extractBraceContent(line, '\\section{'));
       elements.push(
         <Typography
           key={key++}
@@ -43,21 +59,12 @@ function parseLatexContent(latex) {
           sx={{
             mt: 5,
             mb: 2.5,
-            fontWeight: 700,
-            background: 'linear-gradient(135deg, #facc15 0%, #f97316 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
+            fontWeight: 600,
+            color: '#e5c07b',
             position: 'relative',
-            '&::before': {
-              content: '""',
-              position: 'absolute',
-              bottom: '-8px',
-              left: 0,
-              width: '60px',
-              height: '3px',
-              background: 'linear-gradient(90deg, #facc15 0%, #f97316 100%)',
-            }
+            pb: 1,
+            borderBottom: '1px solid rgba(229, 192, 123, 0.2)',
+            letterSpacing: '-0.01em',
           }}
         >
           {content}
@@ -69,7 +76,7 @@ function parseLatexContent(latex) {
 
     // Handle subsections
     if (line.startsWith('\\subsection{')) {
-      const content = extractBraceContent(line, '\\subsection{');
+      const content = unescapeLatex(extractBraceContent(line, '\\subsection{'));
       elements.push(
         <Typography
           key={key++}
@@ -78,18 +85,18 @@ function parseLatexContent(latex) {
             mt: 4,
             mb: 2,
             fontWeight: 600,
-            color: '#a78bfa', // Purple-ish
+            color: '#cbd5e1',
             position: 'relative',
-            paddingLeft: '16px',
+            paddingLeft: '12px',
             '&::before': {
               content: '""',
               position: 'absolute',
               left: 0,
               top: '50%',
               transform: 'translateY(-50%)',
-              width: '4px',
-              height: '70%',
-              background: 'linear-gradient(180deg, #8b5cf6 0%, #a78bfa 100%)',
+              width: '3px',
+              height: '60%',
+              background: 'rgba(203, 213, 225, 0.4)',
               borderRadius: '2px',
             }
           }}
@@ -103,7 +110,7 @@ function parseLatexContent(latex) {
 
     // Handle subsubsections
     if (line.startsWith('\\subsubsection{')) {
-      const content = extractBraceContent(line, '\\subsubsection{');
+      const content = unescapeLatex(extractBraceContent(line, '\\subsubsection{'));
       elements.push(
         <Typography
           key={key++}
@@ -111,8 +118,8 @@ function parseLatexContent(latex) {
           sx={{
             mt: 3,
             mb: 1.5,
-            fontWeight: 600,
-            color: '#60a5fa', // Blue
+            fontWeight: 500,
+            color: '#94a3b8',
           }}
         >
           {content}
@@ -159,8 +166,8 @@ function parseLatexContent(latex) {
             my: 2,
             pl: 3,
             '& li::marker': {
-              color: '#facc15',
-              fontSize: '1.2em',
+              color: '#d4af37',
+              fontSize: '1.1em',
             }
           }}
         >
@@ -169,13 +176,7 @@ function parseLatexContent(latex) {
               key={idx}
               component="li"
               variant="body1"
-              sx={{
-                mb: 1.5,
-                '&:hover': {
-                  color: '#fde68a',
-                  transition: 'color 0.2s',
-                }
-              }}
+              sx={{ mb: 1.5 }}
             >
               {item}
             </Typography>
@@ -206,8 +207,8 @@ function parseLatexContent(latex) {
             my: 2,
             pl: 3,
             '& li::marker': {
-              color: '#f97316',
-              fontWeight: 700,
+              color: '#c9a961',
+              fontWeight: 600,
             }
           }}
         >
@@ -216,13 +217,7 @@ function parseLatexContent(latex) {
               key={idx}
               component="li"
               variant="body1"
-              sx={{
-                mb: 1.5,
-                '&:hover': {
-                  color: '#fde68a',
-                  transition: 'color 0.2s',
-                }
-              }}
+              sx={{ mb: 1.5 }}
             >
               {item}
             </Typography>
@@ -272,13 +267,12 @@ function parseLatexContent(latex) {
           sx={{
             my: 3,
             position: 'relative',
-            borderLeft: '4px solid',
-            borderImage: 'linear-gradient(180deg, #8b5cf6 0%, #ec4899 100%) 1',
+            borderLeft: '2px solid rgba(212, 175, 55, 0.3)',
             '& pre': {
               margin: 0,
               padding: '20px !important',
-              backgroundColor: '#1e1e1e !important',
-              border: '1px solid rgba(139, 92, 246, 0.3)',
+              backgroundColor: 'rgba(30, 30, 30, 0.5) !important',
+              border: '1px solid rgba(212, 175, 55, 0.15)',
               borderLeft: 'none',
               borderRadius: 0,
               fontSize: '0.875rem',
@@ -286,20 +280,20 @@ function parseLatexContent(latex) {
             '& code': {
               fontFamily: "'Fira Code', 'Consolas', 'Monaco', monospace",
             },
-            '&::before': {
+            '&::after': language !== 'text' ? {
               content: `"${language}"`,
               position: 'absolute',
-              top: 0,
-              right: 0,
-              background: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)',
-              color: '#fff',
-              padding: '4px 12px',
-              fontSize: '0.75rem',
-              fontWeight: 600,
+              top: '12px',
+              right: '12px',
+              color: 'rgba(212, 175, 55, 0.6)',
+              padding: '2px 8px',
+              fontSize: '0.7rem',
+              fontWeight: 500,
               textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              zIndex: 1,
-            }
+              letterSpacing: '0.08em',
+              border: '1px solid rgba(212, 175, 55, 0.2)',
+              backgroundColor: 'rgba(0, 0, 0, 0.3)',
+            } : {}
           }}
         >
           <SyntaxHighlighter
@@ -310,8 +304,7 @@ function parseLatexContent(latex) {
             customStyle={{
               margin: 0,
               padding: '20px',
-              paddingTop: language !== 'text' ? '32px' : '20px',
-              backgroundColor: '#1e1e1e',
+              backgroundColor: 'transparent',
               borderRadius: 0,
             }}
           >
@@ -448,9 +441,9 @@ function parseInlineFormatting(text) {
 
   // Build the output
   matches.forEach((match) => {
-    // Add text before this match
+    // Add text before this match (unescape LaTeX special chars)
     if (match.start > currentIndex) {
-      parts.push(text.substring(currentIndex, match.start));
+      parts.push(unescapeLatex(text.substring(currentIndex, match.start)));
     }
 
     // Add the formatted content
@@ -460,14 +453,14 @@ function parseInlineFormatting(text) {
         break;
       case 'bold':
         parts.push(
-          <strong key={key++} style={{ color: '#facc15', fontWeight: 700 }}>
+          <strong key={key++} style={{ color: '#e5c07b', fontWeight: 600 }}>
             {match.content}
           </strong>
         );
         break;
       case 'italic':
         parts.push(
-          <em key={key++} style={{ color: '#c084fc' }}>
+          <em key={key++} style={{ color: '#cbd5e1', fontStyle: 'italic' }}>
             {match.content}
           </em>
         );
@@ -477,11 +470,11 @@ function parseInlineFormatting(text) {
           <code
             key={key++}
             style={{
-              backgroundColor: 'rgba(139, 92, 246, 0.15)',
-              color: '#c084fc',
-              padding: '3px 8px',
-              borderRadius: '4px',
-              border: '1px solid rgba(139, 92, 246, 0.3)',
+              backgroundColor: 'rgba(212, 175, 55, 0.08)',
+              color: '#d4af37',
+              padding: '2px 6px',
+              borderRadius: '3px',
+              border: '1px solid rgba(212, 175, 55, 0.15)',
               fontFamily: "'Fira Code', 'Consolas', monospace",
               fontSize: '0.9em',
               fontWeight: 500,
@@ -496,12 +489,12 @@ function parseInlineFormatting(text) {
     currentIndex = match.end;
   });
 
-  // Add remaining text
+  // Add remaining text (unescape LaTeX special chars)
   if (currentIndex < text.length) {
-    parts.push(text.substring(currentIndex));
+    parts.push(unescapeLatex(text.substring(currentIndex)));
   }
 
-  return parts.length > 0 ? parts : text;
+  return parts.length > 0 ? parts : unescapeLatex(text);
 }
 
 /**
