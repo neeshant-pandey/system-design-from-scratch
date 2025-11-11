@@ -11,6 +11,22 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
  */
 
 /**
+ * Unescape LaTeX special characters
+ * Converts \% to %, \$ to $, etc.
+ */
+function unescapeLatex(text) {
+  if (!text) return text;
+  return text
+    .replace(/\\%/g, '%')
+    .replace(/\\\$/g, '$')
+    .replace(/\\&/g, '&')
+    .replace(/\\#/g, '#')
+    .replace(/\\_/g, '_')
+    .replace(/\\~/g, '~')
+    .replace(/\\\^/g, '^');
+}
+
+/**
  * Parse LaTeX commands and convert to React elements
  */
 function parseLatexContent(latex) {
@@ -35,7 +51,7 @@ function parseLatexContent(latex) {
 
     // Handle sections
     if (line.startsWith('\\section{')) {
-      const content = extractBraceContent(line, '\\section{');
+      const content = unescapeLatex(extractBraceContent(line, '\\section{'));
       elements.push(
         <Typography
           key={key++}
@@ -60,7 +76,7 @@ function parseLatexContent(latex) {
 
     // Handle subsections
     if (line.startsWith('\\subsection{')) {
-      const content = extractBraceContent(line, '\\subsection{');
+      const content = unescapeLatex(extractBraceContent(line, '\\subsection{'));
       elements.push(
         <Typography
           key={key++}
@@ -94,7 +110,7 @@ function parseLatexContent(latex) {
 
     // Handle subsubsections
     if (line.startsWith('\\subsubsection{')) {
-      const content = extractBraceContent(line, '\\subsubsection{');
+      const content = unescapeLatex(extractBraceContent(line, '\\subsubsection{'));
       elements.push(
         <Typography
           key={key++}
@@ -425,9 +441,9 @@ function parseInlineFormatting(text) {
 
   // Build the output
   matches.forEach((match) => {
-    // Add text before this match
+    // Add text before this match (unescape LaTeX special chars)
     if (match.start > currentIndex) {
-      parts.push(text.substring(currentIndex, match.start));
+      parts.push(unescapeLatex(text.substring(currentIndex, match.start)));
     }
 
     // Add the formatted content
@@ -473,12 +489,12 @@ function parseInlineFormatting(text) {
     currentIndex = match.end;
   });
 
-  // Add remaining text
+  // Add remaining text (unescape LaTeX special chars)
   if (currentIndex < text.length) {
-    parts.push(text.substring(currentIndex));
+    parts.push(unescapeLatex(text.substring(currentIndex)));
   }
 
-  return parts.length > 0 ? parts : text;
+  return parts.length > 0 ? parts : unescapeLatex(text);
 }
 
 /**
