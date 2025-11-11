@@ -16,46 +16,64 @@ import {
 } from '@mui/material';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 
-// Create a custom theme inspired by react.gg
+// Brutal Neobrutalism Theme with Black
 const theme = createTheme({
   palette: {
-    mode: 'light',
+    mode: 'dark',
     primary: {
-      main: '#2563eb',
+      main: '#00ff00', // Bright lime green
+    },
+    secondary: {
+      main: '#ff00ff', // Bright magenta
     },
     background: {
-      default: '#ffffff',
-      paper: '#f9fafb',
+      default: '#000000',
+      paper: '#1a1a1a',
     },
     text: {
-      primary: '#1f2937',
-      secondary: '#6b7280',
+      primary: '#ffffff',
+      secondary: '#00ff00',
+    },
+    warning: {
+      main: '#ffff00', // Bright yellow
+    },
+    info: {
+      main: '#00ffff', // Bright cyan
     },
   },
   typography: {
-    fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    fontFamily: '"Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     h1: {
-      fontSize: '3rem',
-      fontWeight: 700,
-      lineHeight: 1.2,
-      letterSpacing: '-0.02em',
+      fontSize: '4rem',
+      fontWeight: 900,
+      lineHeight: 1.1,
+      letterSpacing: '-0.03em',
+      textTransform: 'uppercase',
     },
     h2: {
-      fontSize: '2rem',
-      fontWeight: 600,
-      lineHeight: 1.3,
-      letterSpacing: '-0.01em',
+      fontSize: '2.5rem',
+      fontWeight: 900,
+      lineHeight: 1.2,
+      letterSpacing: '-0.02em',
+      textTransform: 'uppercase',
     },
     h3: {
-      fontSize: '1.5rem',
-      fontWeight: 600,
-      lineHeight: 1.4,
+      fontSize: '1.75rem',
+      fontWeight: 800,
+      lineHeight: 1.3,
     },
     body1: {
       fontSize: '1.125rem',
-      lineHeight: 1.7,
-      color: '#374151',
+      lineHeight: 1.6,
+      fontWeight: 500,
     },
+    h6: {
+      fontWeight: 900,
+      textTransform: 'uppercase',
+    },
+  },
+  shape: {
+    borderRadius: 0, // No rounded corners - brutal sharp edges
   },
   components: {
     MuiCssBaseline: {
@@ -96,7 +114,8 @@ function App() {
               width: drawerWidth,
               boxSizing: 'border-box',
               backgroundColor: 'background.paper',
-              borderRight: '1px solid #e5e7eb',
+              borderRight: '5px solid #00ff00',
+              boxShadow: '8px 0 0 0 #00ff00',
             },
           }}
         >
@@ -104,17 +123,18 @@ function App() {
           <Box
             sx={{
               p: 3,
-              borderBottom: '1px solid #e5e7eb',
+              borderBottom: '5px solid #00ff00',
+              backgroundColor: '#000',
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-              <MenuBookIcon sx={{ fontSize: 32, color: 'primary.main' }} />
-              <Typography variant="h6" sx={{ fontWeight: 700, fontSize: '1.25rem' }}>
+              <MenuBookIcon sx={{ fontSize: 40, color: 'primary.main' }} />
+              <Typography variant="h6" sx={{ fontWeight: 900, fontSize: '1.5rem', color: '#fff' }}>
                 System Design
               </Typography>
             </Box>
-            <Typography variant="caption" sx={{ color: 'text.secondary', mt: 0.5, display: 'block' }}>
-              From Scratch
+            <Typography variant="caption" sx={{ color: 'primary.main', mt: 1, display: 'block', fontWeight: 700, fontSize: '0.9rem' }}>
+              FROM SCRATCH
             </Typography>
           </Box>
 
@@ -129,17 +149,25 @@ function App() {
                       sx={{
                         px: 3,
                         py: 1.5,
+                        mx: 2,
+                        my: 0.5,
+                        border: selectedTopic === topic.title ? '3px solid #00ff00' : '3px solid transparent',
+                        backgroundColor: selectedTopic === topic.title ? '#00ff00' : 'transparent',
+                        boxShadow: selectedTopic === topic.title ? '4px 4px 0 0 #fff' : 'none',
                         '&:hover': {
-                          backgroundColor: 'rgba(37, 99, 235, 0.05)',
+                          backgroundColor: '#00ff00',
+                          border: '3px solid #00ff00',
+                          boxShadow: '4px 4px 0 0 #fff',
                         },
                       }}
                     >
                       <ListItemText
                         primary={topic.title}
                         primaryTypographyProps={{
-                          fontWeight: 600,
-                          fontSize: '0.95rem',
-                          color: selectedTopic === topic.title ? 'primary.main' : 'text.primary',
+                          fontWeight: 800,
+                          fontSize: '1rem',
+                          color: selectedTopic === topic.title ? '#000' : 'text.primary',
+                          textTransform: 'uppercase',
                         }}
                       />
                     </ListItemButton>
@@ -151,17 +179,25 @@ function App() {
                         onClick={() => setSelectedTopic(subtopic)}
                         sx={{
                           pl: 5,
+                          pr: 3,
                           py: 1,
+                          mx: 2,
+                          my: 0.3,
+                          border: selectedTopic === subtopic ? '2px solid #ffff00' : '2px solid transparent',
+                          backgroundColor: selectedTopic === subtopic ? '#ffff00' : 'transparent',
                           '&:hover': {
-                            backgroundColor: 'rgba(37, 99, 235, 0.05)',
+                            backgroundColor: '#ffff00',
+                            border: '2px solid #ffff00',
+                            boxShadow: '3px 3px 0 0 #fff',
                           },
                         }}
                       >
                         <ListItemText
                           primary={subtopic}
                           primaryTypographyProps={{
-                            fontSize: '0.875rem',
-                            color: selectedTopic === subtopic ? 'primary.main' : 'text.secondary',
+                            fontSize: '0.85rem',
+                            fontWeight: 700,
+                            color: selectedTopic === subtopic ? '#000' : 'text.secondary',
                           }}
                         />
                       </ListItemButton>
@@ -195,57 +231,101 @@ function App() {
                 variant="h1"
                 sx={{
                   mb: 3,
-                  background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
+                  color: '#00ff00',
+                  textShadow: '5px 5px 0 #ff00ff, 10px 10px 0 #ffff00',
                 }}
               >
                 Master System Design
               </Typography>
-              <Typography
-                variant="body1"
+              <Box
                 sx={{
-                  fontSize: '1.25rem',
-                  color: 'text.secondary',
-                  maxWidth: '600px',
+                  backgroundColor: '#ff00ff',
+                  border: '4px solid #000',
+                  boxShadow: '8px 8px 0 0 #00ff00',
+                  p: 3,
+                  maxWidth: '700px',
                 }}
               >
-                Learn how to design scalable, reliable, and efficient systems from the ground up.
-                A comprehensive guide for engineers and architects.
-              </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontSize: '1.25rem',
+                    color: '#000',
+                    fontWeight: 700,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  Learn how to design scalable, reliable, and efficient systems from the ground up.
+                  A comprehensive guide for engineers and architects.
+                </Typography>
+              </Box>
             </Box>
 
             {/* Current Topic Content */}
             <Box
               sx={{
-                backgroundColor: 'background.paper',
-                borderRadius: 2,
+                backgroundColor: '#1a1a1a',
                 p: 4,
-                border: '1px solid #e5e7eb',
+                border: '5px solid #ffff00',
+                boxShadow: '10px 10px 0 0 #ff00ff',
               }}
             >
-              <Typography variant="h2" sx={{ mb: 3 }}>
+              <Typography
+                variant="h2"
+                sx={{
+                  mb: 3,
+                  color: '#ffff00',
+                  textShadow: '3px 3px 0 #00ffff',
+                }}
+              >
                 {selectedTopic}
               </Typography>
-              <Typography variant="body1" sx={{ mb: 2 }}>
+              <Typography variant="body1" sx={{ mb: 2, color: '#fff' }}>
                 Welcome to the System Design course! This is Phase 1 - the foundation of our
                 book-style learning platform.
               </Typography>
-              <Typography variant="body1" sx={{ mb: 2 }}>
+              <Typography variant="body1" sx={{ mb: 2, color: '#fff' }}>
                 In future phases, this content area will be populated with comprehensive lessons,
                 interactive diagrams, code examples, and real-world case studies.
               </Typography>
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                Select a topic from the sidebar to navigate through the course content.
-              </Typography>
+              <Box
+                sx={{
+                  mt: 4,
+                  p: 3,
+                  backgroundColor: '#00ffff',
+                  border: '4px solid #000',
+                  boxShadow: '6px 6px 0 0 #ff00ff',
+                }}
+              >
+                <Typography variant="body1" sx={{ color: '#000', fontWeight: 700 }}>
+                  Select a topic from the sidebar to navigate through the course content.
+                </Typography>
+              </Box>
             </Box>
 
             {/* Footer Note */}
-            <Box sx={{ mt: 6, pt: 4, borderTop: '1px solid #e5e7eb' }}>
-              <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: 'center' }}>
-                Phase 1: Foundation Complete ✓ • Built with React + MUI
-              </Typography>
+            <Box
+              sx={{
+                mt: 6,
+                pt: 4,
+                borderTop: '5px solid #00ff00',
+                textAlign: 'center',
+              }}
+            >
+              <Box
+                sx={{
+                  display: 'inline-block',
+                  backgroundColor: '#00ff00',
+                  border: '3px solid #000',
+                  boxShadow: '5px 5px 0 0 #fff',
+                  px: 4,
+                  py: 2,
+                }}
+              >
+                <Typography variant="body2" sx={{ color: '#000', fontWeight: 900, fontSize: '1rem' }}>
+                  PHASE 1: FOUNDATION COMPLETE ✓ • BUILT WITH REACT + MUI
+                </Typography>
+              </Box>
             </Box>
           </Container>
         </Box>
