@@ -37,7 +37,29 @@ function parseLatexContent(latex) {
     if (line.startsWith('\\section{')) {
       const content = extractBraceContent(line, '\\section{');
       elements.push(
-        <Typography key={key++} variant="h3" sx={{ mt: 4, mb: 2, fontWeight: 700 }}>
+        <Typography
+          key={key++}
+          variant="h3"
+          sx={{
+            mt: 5,
+            mb: 2.5,
+            fontWeight: 700,
+            background: 'linear-gradient(135deg, #facc15 0%, #f97316 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            position: 'relative',
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              bottom: '-8px',
+              left: 0,
+              width: '60px',
+              height: '3px',
+              background: 'linear-gradient(90deg, #facc15 0%, #f97316 100%)',
+            }
+          }}
+        >
           {content}
         </Typography>
       );
@@ -49,7 +71,29 @@ function parseLatexContent(latex) {
     if (line.startsWith('\\subsection{')) {
       const content = extractBraceContent(line, '\\subsection{');
       elements.push(
-        <Typography key={key++} variant="h4" sx={{ mt: 3, mb: 1.5, fontWeight: 600 }}>
+        <Typography
+          key={key++}
+          variant="h4"
+          sx={{
+            mt: 4,
+            mb: 2,
+            fontWeight: 600,
+            color: '#a78bfa', // Purple-ish
+            position: 'relative',
+            paddingLeft: '16px',
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              left: 0,
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: '4px',
+              height: '70%',
+              background: 'linear-gradient(180deg, #8b5cf6 0%, #a78bfa 100%)',
+              borderRadius: '2px',
+            }
+          }}
+        >
           {content}
         </Typography>
       );
@@ -61,7 +105,16 @@ function parseLatexContent(latex) {
     if (line.startsWith('\\subsubsection{')) {
       const content = extractBraceContent(line, '\\subsubsection{');
       elements.push(
-        <Typography key={key++} variant="h5" sx={{ mt: 2, mb: 1, fontWeight: 600 }}>
+        <Typography
+          key={key++}
+          variant="h5"
+          sx={{
+            mt: 3,
+            mb: 1.5,
+            fontWeight: 600,
+            color: '#60a5fa', // Blue
+          }}
+        >
           {content}
         </Typography>
       );
@@ -99,9 +152,31 @@ function parseLatexContent(latex) {
         i++;
       }
       elements.push(
-        <Box key={key++} component="ul" sx={{ my: 2, pl: 3 }}>
+        <Box
+          key={key++}
+          component="ul"
+          sx={{
+            my: 2,
+            pl: 3,
+            '& li::marker': {
+              color: '#facc15',
+              fontSize: '1.2em',
+            }
+          }}
+        >
           {listItems.map((item, idx) => (
-            <Typography key={idx} component="li" variant="body1" sx={{ mb: 1 }}>
+            <Typography
+              key={idx}
+              component="li"
+              variant="body1"
+              sx={{
+                mb: 1.5,
+                '&:hover': {
+                  color: '#fde68a',
+                  transition: 'color 0.2s',
+                }
+              }}
+            >
               {item}
             </Typography>
           ))}
@@ -124,9 +199,31 @@ function parseLatexContent(latex) {
         i++;
       }
       elements.push(
-        <Box key={key++} component="ol" sx={{ my: 2, pl: 3 }}>
+        <Box
+          key={key++}
+          component="ol"
+          sx={{
+            my: 2,
+            pl: 3,
+            '& li::marker': {
+              color: '#f97316',
+              fontWeight: 700,
+            }
+          }}
+        >
           {listItems.map((item, idx) => (
-            <Typography key={idx} component="li" variant="body1" sx={{ mb: 1 }}>
+            <Typography
+              key={idx}
+              component="li"
+              variant="body1"
+              sx={{
+                mb: 1.5,
+                '&:hover': {
+                  color: '#fde68a',
+                  transition: 'color 0.2s',
+                }
+              }}
+            >
               {item}
             </Typography>
           ))}
@@ -173,18 +270,36 @@ function parseLatexContent(latex) {
         <Box
           key={key++}
           sx={{
-            my: 2,
+            my: 3,
+            position: 'relative',
+            borderLeft: '4px solid',
+            borderImage: 'linear-gradient(180deg, #8b5cf6 0%, #ec4899 100%) 1',
             '& pre': {
               margin: 0,
-              padding: '16px !important',
+              padding: '20px !important',
               backgroundColor: '#1e1e1e !important',
-              border: '1px solid rgba(232, 232, 232, 0.12)',
+              border: '1px solid rgba(139, 92, 246, 0.3)',
+              borderLeft: 'none',
               borderRadius: 0,
               fontSize: '0.875rem',
             },
             '& code': {
               fontFamily: "'Fira Code', 'Consolas', 'Monaco', monospace",
             },
+            '&::before': {
+              content: `"${language}"`,
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              background: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)',
+              color: '#fff',
+              padding: '4px 12px',
+              fontSize: '0.75rem',
+              fontWeight: 600,
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              zIndex: 1,
+            }
           }}
         >
           <SyntaxHighlighter
@@ -194,9 +309,9 @@ function parseLatexContent(latex) {
             wrapLines={true}
             customStyle={{
               margin: 0,
-              padding: '16px',
+              padding: '20px',
+              paddingTop: language !== 'text' ? '32px' : '20px',
               backgroundColor: '#1e1e1e',
-              border: '1px solid rgba(232, 232, 232, 0.12)',
               borderRadius: 0,
             }}
           >
@@ -344,21 +459,32 @@ function parseInlineFormatting(text) {
         parts.push(<InlineMath key={key++} math={match.content} />);
         break;
       case 'bold':
-        parts.push(<strong key={key++}>{match.content}</strong>);
+        parts.push(
+          <strong key={key++} style={{ color: '#facc15', fontWeight: 700 }}>
+            {match.content}
+          </strong>
+        );
         break;
       case 'italic':
-        parts.push(<em key={key++}>{match.content}</em>);
+        parts.push(
+          <em key={key++} style={{ color: '#c084fc' }}>
+            {match.content}
+          </em>
+        );
         break;
       case 'code':
         parts.push(
           <code
             key={key++}
             style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              padding: '2px 6px',
-              borderRadius: '3px',
-              fontFamily: 'monospace',
+              backgroundColor: 'rgba(139, 92, 246, 0.15)',
+              color: '#c084fc',
+              padding: '3px 8px',
+              borderRadius: '4px',
+              border: '1px solid rgba(139, 92, 246, 0.3)',
+              fontFamily: "'Fira Code', 'Consolas', monospace",
               fontSize: '0.9em',
+              fontWeight: 500,
             }}
           >
             {match.content}
