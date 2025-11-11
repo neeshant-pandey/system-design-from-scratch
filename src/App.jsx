@@ -13,8 +13,12 @@ import {
   CssBaseline,
   ThemeProvider,
   createTheme,
+  Collapse,
+  IconButton,
 } from '@mui/material';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 // Sophisticated Minimal Theme
 const theme = createTheme({
@@ -199,7 +203,21 @@ const topics = [
 ];
 
 function App() {
-  const [selectedTopic, setSelectedTopic] = useState('Intro to System Design');
+  const [selectedTopic, setSelectedTopic] = useState('Introduction');
+  const [expandedTopics, setExpandedTopics] = useState({
+    1: true, // Introduction expanded by default
+    2: false,
+    3: false,
+    4: false,
+  });
+
+  const toggleTopic = (topicId) => {
+    setExpandedTopics(prev => ({
+      ...prev,
+      [topicId]: !prev[topicId]
+    }));
+  };
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -246,60 +264,68 @@ function App() {
                 <Box key={topic.id}>
                   <ListItem disablePadding>
                     <ListItemButton
-                      onClick={() => setSelectedTopic(topic.title)}
+                      onClick={() => toggleTopic(topic.id)}
                       sx={{
-                        px: 3,
+                        px: 2,
                         py: 1.25,
                         mx: 2,
                         my: 0.5,
-                        borderLeft: selectedTopic === topic.title ? '2px solid #e8e8e8' : '2px solid transparent',
-                        backgroundColor: selectedTopic === topic.title ? 'rgba(232, 232, 232, 0.05)' : 'transparent',
                         '&:hover': {
                           backgroundColor: 'rgba(232, 232, 232, 0.08)',
-                          borderLeft: '2px solid #e8e8e8',
                         },
                       }}
                     >
-                      <ListItemText
-                        primary={topic.title}
-                        primaryTypographyProps={{
-                          fontWeight: 600,
-                          fontSize: '0.9375rem',
-                          color: selectedTopic === topic.title ? '#f5f5f5' : 'text.secondary',
-                          letterSpacing: '-0.01em',
-                        }}
-                      />
-                    </ListItemButton>
-                  </ListItem>
-                  {/* Subtopics */}
-                  {topic.subtopics.map((subtopic) => (
-                    <ListItem key={subtopic} disablePadding>
-                      <ListItemButton
-                        onClick={() => setSelectedTopic(subtopic)}
-                        sx={{
-                          pl: 5,
-                          pr: 3,
-                          py: 0.875,
-                          mx: 2,
-                          my: 0.25,
-                          borderLeft: selectedTopic === subtopic ? '1px solid rgba(232, 232, 232, 0.3)' : '1px solid transparent',
-                          '&:hover': {
-                            backgroundColor: 'rgba(232, 232, 232, 0.04)',
-                            borderLeft: '1px solid rgba(232, 232, 232, 0.3)',
-                          },
-                        }}
-                      >
+                      <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                        {expandedTopics[topic.id] ? (
+                          <ExpandMoreIcon sx={{ fontSize: 18, color: 'text.secondary', mr: 1 }} />
+                        ) : (
+                          <ChevronRightIcon sx={{ fontSize: 18, color: 'text.secondary', mr: 1 }} />
+                        )}
                         <ListItemText
-                          primary={subtopic}
+                          primary={topic.title}
                           primaryTypographyProps={{
-                            fontSize: '0.8125rem',
-                            fontWeight: 400,
-                            color: selectedTopic === subtopic ? '#f5f5f5' : 'text.secondary',
+                            fontWeight: 600,
+                            fontSize: '0.9375rem',
+                            color: 'text.secondary',
+                            letterSpacing: '-0.01em',
                           }}
                         />
-                      </ListItemButton>
-                    </ListItem>
-                  ))}
+                      </Box>
+                    </ListItemButton>
+                  </ListItem>
+
+                  {/* Subtopics - Collapsible */}
+                  <Collapse in={expandedTopics[topic.id]} timeout="auto" unmountOnExit>
+                    {topic.subtopics.map((subtopic) => (
+                      <ListItem key={subtopic} disablePadding>
+                        <ListItemButton
+                          onClick={() => setSelectedTopic(subtopic)}
+                          sx={{
+                            pl: 5.5,
+                            pr: 3,
+                            py: 0.875,
+                            mx: 2,
+                            my: 0.25,
+                            borderLeft: selectedTopic === subtopic ? '1px solid rgba(232, 232, 232, 0.3)' : '1px solid transparent',
+                            backgroundColor: selectedTopic === subtopic ? 'rgba(232, 232, 232, 0.05)' : 'transparent',
+                            '&:hover': {
+                              backgroundColor: 'rgba(232, 232, 232, 0.08)',
+                              borderLeft: '1px solid rgba(232, 232, 232, 0.3)',
+                            },
+                          }}
+                        >
+                          <ListItemText
+                            primary={subtopic}
+                            primaryTypographyProps={{
+                              fontSize: '0.8125rem',
+                              fontWeight: 400,
+                              color: selectedTopic === subtopic ? '#f5f5f5' : 'text.secondary',
+                            }}
+                          />
+                        </ListItemButton>
+                      </ListItem>
+                    ))}
+                  </Collapse>
                 </Box>
               ))}
             </List>
