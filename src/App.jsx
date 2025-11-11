@@ -2,8 +2,6 @@ import { useState } from 'react';
 import {
   Box,
   Drawer,
-  AppBar,
-  Toolbar,
   Typography,
   List,
   ListItem,
@@ -14,64 +12,65 @@ import {
   ThemeProvider,
   createTheme,
   Collapse,
-  IconButton,
 } from '@mui/material';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-// Sophisticated Minimal Theme
+// Brutal Neobrutalism Theme with Black
 const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#e8e8e8', // Off-white
+      main: '#00ff00', // Bright lime green
     },
     secondary: {
-      main: '#facc15', // Yellow accent
+      main: '#ff00ff', // Bright magenta
     },
     background: {
       default: '#000000',
-      paper: '#0a0a0a',
+      paper: '#1a1a1a',
     },
     text: {
-      primary: '#f5f5f5', // Off-white
-      secondary: '#a8a8a8', // Muted gray
+      primary: '#ffffff',
+      secondary: '#00ff00',
     },
     warning: {
-      main: '#facc15', // Yellow
+      main: '#ffff00', // Bright yellow
     },
     info: {
-      main: '#e8e8e8', // Light off-white
+      main: '#00ffff', // Bright cyan
     },
   },
   typography: {
     fontFamily: '"Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     h1: {
-      fontSize: '3.5rem',
-      fontWeight: 700,
+      fontSize: '4rem',
+      fontWeight: 900,
       lineHeight: 1.1,
-      letterSpacing: '-0.04em',
+      letterSpacing: '-0.03em',
+      textTransform: 'uppercase',
     },
     h2: {
-      fontSize: '2rem',
-      fontWeight: 700,
-      lineHeight: 1.3,
+      fontSize: '2.5rem',
+      fontWeight: 900,
+      lineHeight: 1.2,
       letterSpacing: '-0.02em',
+      textTransform: 'uppercase',
     },
     h3: {
-      fontSize: '1.5rem',
-      fontWeight: 600,
-      lineHeight: 1.4,
+      fontSize: '1.75rem',
+      fontWeight: 800,
+      lineHeight: 1.3,
     },
     body1: {
-      fontSize: '1.0625rem',
-      lineHeight: 1.8,
-      fontWeight: 400,
+      fontSize: '1.125rem',
+      lineHeight: 1.6,
+      fontWeight: 500,
     },
     h6: {
-      fontWeight: 600,
-      letterSpacing: '0.05em',
+      fontWeight: 900,
+      textTransform: 'uppercase',
     },
   },
   shape: {
@@ -89,334 +88,556 @@ const theme = createTheme({
   },
 });
 
-const drawerWidth = 280;
+const drawerWidth = 320;
 
-// Complete System Design Curriculum - Comprehensive Edition
-const topics = [
+// Complete System Design Curriculum - 3-Level Hierarchy
+// SECTION → CHAPTER → TOPICS
+const curriculum = [
   {
-    id: 1,
-    title: '1. Foundations of System Design',
-    subtopics: [
-      'Introduction to System Design',
-      'Communication, Coordination & Scalability',
-      'Resiliency & Maintainability',
-      'Anatomy of a Distributed System',
-      'Estimation and Back of Envelope Calculations',
+    id: 'section-1',
+    section: 'SECTION I: FOUNDATIONS',
+    chapters: [
+      {
+        id: 'ch-1-1',
+        title: 'Introduction to System Design',
+        topics: [
+          'What is System Design?',
+          'Communication, Coordination & Scalability',
+          'Resiliency & Maintainability',
+          'Anatomy of a Distributed System',
+          'System Design Interview Framework',
+        ],
+      },
+      {
+        id: 'ch-1-2',
+        title: 'Estimation & Calculations',
+        topics: [
+          'Back of Envelope Calculations',
+          'Latency Numbers Every Programmer Should Know',
+          'QPS (Queries Per Second) Estimation',
+          'Storage & Bandwidth Estimation',
+        ],
+      },
+      {
+        id: 'ch-1-3',
+        title: 'Database Fundamentals',
+        topics: [
+          'Database Basics (SQL vs NoSQL)',
+          'ACID Properties & Transactions',
+          'Database Indexing',
+          'Connection Pooling',
+          'Query Optimization',
+        ],
+      },
     ],
   },
   {
-    id: 2,
-    title: '2. Communication Fundamentals',
-    subtopics: [
-      'Reliable Links (TCP)',
-      'Secure Links (TLS/SSL)',
-      'Encryption, Authentication & Integrity',
-      'Service Discovery',
-      'REST APIs & HTTP',
-      'Request Methods & Status Codes',
-      'API Evolution & Idempotency',
-      'OpenAPI Specifications',
+    id: 'section-2',
+    section: 'SECTION II: COMMUNICATION',
+    chapters: [
+      {
+        id: 'ch-2-1',
+        title: 'Network Fundamentals',
+        topics: [
+          'Reliable Links (TCP)',
+          'Secure Links (TLS/SSL)',
+          'Encryption, Authentication & Integrity',
+          'Connection Lifecycle',
+          'Flow Control & Congestion Control',
+        ],
+      },
+      {
+        id: 'ch-2-2',
+        title: 'APIs & HTTP',
+        topics: [
+          'REST APIs & HTTP Basics',
+          'Request Methods & Status Codes',
+          'API Versioning & Idempotency',
+          'OpenAPI Specifications',
+          'API Evolution & Backward Compatibility',
+        ],
+      },
+      {
+        id: 'ch-2-3',
+        title: 'Service Discovery',
+        topics: [
+          'Service Discovery Patterns',
+          'DNS-based Discovery',
+          'Client-Side vs Server-Side Discovery',
+          'Consul, Eureka, etcd',
+        ],
+      },
     ],
   },
   {
-    id: 3,
-    title: '3. Data Storage & Databases',
-    subtopics: [
-      'Database Fundamentals (DBMS Basics)',
-      'SQL vs NoSQL',
-      'Scaling Databases',
-      'Replication Strategies',
-      'Partitioning & Sharding',
-      'Database Indexing',
+    id: 'section-3',
+    section: 'SECTION III: DATA AT REST',
+    chapters: [
+      {
+        id: 'ch-3-1',
+        title: 'Scaling Databases',
+        topics: [
+          'Database Replication (Master-Slave, Multi-Master)',
+          'Partitioning & Sharding Strategies',
+          'Read Replicas',
+          'OLTP vs OLAP',
+        ],
+      },
+      {
+        id: 'ch-3-2',
+        title: 'NoSQL Databases',
+        topics: [
+          'Document Stores (MongoDB)',
+          'Column Stores (Cassandra, HBase)',
+          'Key-Value Stores (Redis, DynamoDB)',
+          'Graph Databases (Neo4j)',
+        ],
+      },
+      {
+        id: 'ch-3-3',
+        title: 'Caching Strategies',
+        topics: [
+          'Caching Fundamentals',
+          'Caching Policies (LRU, LFU, FIFO)',
+          'HTTP Caching',
+          'Cache Invalidation Strategies',
+          'Redis & In-Memory Caching',
+        ],
+      },
     ],
   },
   {
-    id: 4,
-    title: '4. Caching & Performance',
-    subtopics: [
-      'HTTP Caching',
-      'Caching Policies (LRU, LFU, FIFO)',
-      'Local vs External Cache',
-      'Content Delivery Networks (CDN)',
-      'Cache Invalidation Strategies',
-      'Key Value Stores & Redis',
+    id: 'section-4',
+    section: 'SECTION IV: FIRST SYSTEMS',
+    chapters: [
+      {
+        id: 'ch-4-1',
+        title: 'Simple System Designs',
+        topics: [
+          'URL Shortener (bit.ly, tinyurl)',
+          'Pastebin / Code Sharing Service',
+          'Rate Limiter Design',
+          'Unique ID Generator',
+        ],
+      },
+      {
+        id: 'ch-4-2',
+        title: 'Notification Systems',
+        topics: [
+          'Notification Service Architecture',
+          'Push Notifications (FCM, APNS)',
+          'Email Service (SMTP)',
+          'SMS Gateway Integration',
+          'Notification Prioritization & Batching',
+        ],
+      },
+      {
+        id: 'ch-4-3',
+        title: 'Job Scheduling',
+        topics: [
+          'Job Scheduling Platform (Cron at Scale)',
+          'Task Queue Design',
+          'Priority Queues',
+          'Dead Letter Queues',
+          'Job Retry & Error Handling',
+        ],
+      },
     ],
   },
   {
-    id: 5,
-    title: '5. Load Balancing & Traffic Management',
-    subtopics: [
-      'Load Balancers with Nginx (Hands-on)',
-      'DNS Load Balancing',
-      'Transport Layer Load Balancing (L4)',
-      'Application Layer Load Balancing (L7)',
-      'Load Balancing Algorithms',
-      'Health Checks & Failover',
+    id: 'section-5',
+    section: 'SECTION V: SCALABILITY',
+    chapters: [
+      {
+        id: 'ch-5-1',
+        title: 'Load Balancing',
+        topics: [
+          'Load Balancing Fundamentals',
+          'Load Balancers with Nginx (Hands-on)',
+          'DNS Load Balancing',
+          'L4 vs L7 Load Balancing',
+          'Load Balancing Algorithms',
+          'Health Checks & Failover',
+        ],
+      },
+      {
+        id: 'ch-5-2',
+        title: 'Content Delivery',
+        topics: [
+          'Content Delivery Networks (CDN)',
+          'Edge Computing',
+          'Reverse Proxies',
+          'Static vs Dynamic Content',
+          'Cache Control Headers',
+        ],
+      },
+      {
+        id: 'ch-5-3',
+        title: 'Horizontal Scaling',
+        topics: [
+          'Stateless vs Stateful Services',
+          'Session Management',
+          'Sticky Sessions',
+          'Auto Scaling',
+        ],
+      },
     ],
   },
   {
-    id: 6,
-    title: '6. Time, Clocks & Ordering',
-    subtopics: [
-      'Physical Clocks & Clock Synchronization',
-      'Logical Clocks (Lamport Timestamps)',
-      'Vector Clocks',
-      'Causality & Happened-Before Relation',
+    id: 'section-6',
+    section: 'SECTION VI: REAL-WORLD APPLICATIONS',
+    chapters: [
+      {
+        id: 'ch-6-1',
+        title: 'Social & Communication Platforms',
+        topics: [
+          'Live News Feed System (Twitter/Instagram)',
+          'Chat System Design (WhatsApp/Telegram)',
+          'Video Calls (Google Meet/Zoom)',
+          '[Assignment] Design Tinder',
+        ],
+      },
+      {
+        id: 'ch-6-2',
+        title: 'Booking & Reservation Systems',
+        topics: [
+          'Hotel Reservation System',
+          'Booking.com Database Design',
+          'Ticket Booking (Movies/Flights)',
+          'Handling Double Bookings & Race Conditions',
+        ],
+      },
+      {
+        id: 'ch-6-3',
+        title: 'Location-Based Services',
+        topics: [
+          'Uber/Lyft Platform Design',
+          'Real-time Location Tracking',
+          'Geohashing & Proximity Search',
+          '[Assignment] Yelp / Restaurant Discovery',
+        ],
+      },
+      {
+        id: 'ch-6-4',
+        title: 'Search & Discovery',
+        topics: [
+          'Google Search Engine Design',
+          'Inverted Index & Ranking',
+          'Web Crawler Design',
+          'Autocomplete / Typeahead',
+          'K Heavy Hitter Problem',
+        ],
+      },
+      {
+        id: 'ch-6-5',
+        title: 'Media & Streaming',
+        topics: [
+          'Netflix Streaming Platform',
+          'YouTube Video Processing',
+          'Video Encoding & Adaptive Bitrate',
+          'Live Streaming Architecture',
+        ],
+      },
     ],
   },
   {
-    id: 7,
-    title: '7. Distributed Coordination',
-    subtopics: [
-      'System Models (Synchronous, Asynchronous)',
-      'Failure Detection',
-      'Leader Election',
-      'Raft Leader Election Algorithm',
-      'Consensus Protocols',
-      'State Machine Replication',
-      'Chain Replication',
+    id: 'section-7',
+    section: 'SECTION VII: COORDINATION',
+    chapters: [
+      {
+        id: 'ch-7-1',
+        title: 'Time & Ordering',
+        topics: [
+          'Physical Clocks & Synchronization (NTP)',
+          'Logical Clocks (Lamport Timestamps)',
+          'Vector Clocks',
+          'Causality & Happened-Before Relation',
+        ],
+      },
+      {
+        id: 'ch-7-2',
+        title: 'Distributed Coordination',
+        topics: [
+          'System Models (Synchronous, Asynchronous)',
+          'Failure Detection',
+          'Leader Election Algorithms',
+          'Raft Consensus Algorithm',
+          'Paxos Overview',
+        ],
+      },
+      {
+        id: 'ch-7-3',
+        title: 'Consistency & Replication',
+        topics: [
+          'CAP Theorem Explained',
+          'PACELC & PIE Theorems',
+          'Strong vs Eventual Consistency',
+          'Linearizability',
+          'Causal Consistency',
+          'State Machine Replication',
+          'Chain Replication',
+        ],
+      },
+      {
+        id: 'ch-7-4',
+        title: 'Coordination Avoidance',
+        topics: [
+          'CALM Theorem',
+          'Conflict-Free Replicated Data Types (CRDTs)',
+          'Dynamo-Style Data Stores',
+          'Gossip Protocols',
+        ],
+      },
     ],
   },
   {
-    id: 8,
-    title: '8. Consistency & Replication',
-    subtopics: [
-      'Consistency Models: CAP, PACELC, PIE',
-      'Strong vs Eventual Consistency',
-      'Linearizability',
-      'Causal Consistency',
-      'Coordination Avoidance (CALM Theorem)',
-      'Conflict-Free Replicated Data Types (CRDTs)',
-      'Dynamo-Style Data Stores',
+    id: 'section-8',
+    section: 'SECTION VIII: ADVANCED PATTERNS',
+    chapters: [
+      {
+        id: 'ch-8-1',
+        title: 'Transactions & Isolation',
+        topics: [
+          'ACID Properties Deep Dive',
+          'Isolation Levels (Read Uncommitted to Serializable)',
+          'Two-Phase Commit (2PC)',
+          'Atomicity & Durability',
+          'Distributed Transactions',
+        ],
+      },
+      {
+        id: 'ch-8-2',
+        title: 'Asynchronous Transactions',
+        topics: [
+          'Sagas & Compensating Transactions',
+          'Outbox Pattern',
+          'Transactional Outbox',
+          'Event Sourcing',
+        ],
+      },
+      {
+        id: 'ch-8-3',
+        title: 'Microservices Architecture',
+        topics: [
+          'Monolith vs Microservices',
+          'Service Decomposition Strategies',
+          'API Gateway Pattern',
+          'Service Mesh',
+          'Inter-Service Communication',
+          'Distributed Tracing',
+        ],
+      },
+      {
+        id: 'ch-8-4',
+        title: 'Design Patterns for Scale',
+        topics: [
+          'CQRS (Command Query Responsibility Segregation)',
+          'Fan-Out Pattern',
+          'Sidecar Pattern',
+          'Strangler Fig Pattern',
+          'Bulkhead Pattern',
+          'Constant Work Pattern',
+        ],
+      },
+      {
+        id: 'ch-8-5',
+        title: 'Control Planes & Data Planes',
+        topics: [
+          'Separation of Concerns',
+          'Scale Imbalance',
+          'Control Theory in Distributed Systems',
+          'Configuration Management',
+        ],
+      },
     ],
   },
   {
-    id: 9,
-    title: '9. Transactions & Isolation',
-    subtopics: [
-      'ACID Properties',
-      'Isolation Levels (Read Uncommitted to Serializable)',
-      'Two-Phase Commit (2PC)',
-      'Atomicity & Durability',
-      'Asynchronous Transactions',
-      'Sagas & Compensating Transactions',
-      'Outbox Pattern',
-      'NewSQL Databases',
+    id: 'section-9',
+    section: 'SECTION IX: RESILIENCY',
+    chapters: [
+      {
+        id: 'ch-9-1',
+        title: 'Understanding Failures',
+        topics: [
+          'Common Failure Causes',
+          'Hardware Faults',
+          'Network Partitions',
+          'Cascading Failures',
+          'Byzantine Failures',
+        ],
+      },
+      {
+        id: 'ch-9-2',
+        title: 'Resiliency Patterns',
+        topics: [
+          'Timeouts & Deadlines',
+          'Retry Strategies (Exponential Backoff)',
+          'Circuit Breaker Pattern',
+          'Redundancy & Fault Isolation',
+          'Shuffle Sharding',
+          'Cellular Architecture',
+        ],
+      },
+      {
+        id: 'ch-9-3',
+        title: 'Load Management',
+        topics: [
+          'Load Shedding',
+          'Load Leveling',
+          'Rate Limiting Algorithms',
+          'Throttling',
+          'Backpressure',
+        ],
+      },
     ],
   },
   {
-    id: 10,
-    title: '10. Messaging & Event-Driven Architecture',
-    subtopics: [
-      'Message Queues vs Event Streams',
-      'Asynchronous Communication Patterns',
-      'Pub-Sub Architecture',
-      'Message Delivery Guarantees',
-      'Exactly-Once Processing',
-      'Handling Backlogs & Fault Isolation',
-      'Kafka, RabbitMQ, SQS',
+    id: 'section-10',
+    section: 'SECTION X: DATA IN MOTION',
+    chapters: [
+      {
+        id: 'ch-10-1',
+        title: 'Messaging Systems',
+        topics: [
+          'Message Queues vs Event Streams',
+          'Pub-Sub Architecture',
+          'Message Delivery Guarantees',
+          'Exactly-Once Processing',
+          'Kafka, RabbitMQ, AWS SQS',
+        ],
+      },
+      {
+        id: 'ch-10-2',
+        title: 'Stream Processing',
+        topics: [
+          'Batch vs Stream Processing',
+          'Event-Driven Architecture',
+          'Change Data Capture (CDC)',
+          'Handling Backlogs',
+        ],
+      },
+      {
+        id: 'ch-10-3',
+        title: 'Storage Systems',
+        topics: [
+          'Dropbox / Google Drive Design',
+          'Blob Storage (S3-like)',
+          'File System Internals',
+          'Data Deduplication & Compression',
+        ],
+      },
+      {
+        id: 'ch-10-4',
+        title: 'Database Internals',
+        topics: [
+          'Build Your Own Database (LSM Trees)',
+          'B-Trees vs LSM Trees',
+          'Write-Ahead Logs (WAL)',
+          'Storage Engines',
+        ],
+      },
+      {
+        id: 'ch-10-5',
+        title: 'Big Data & Analytics',
+        topics: [
+          'Big Data Processing (Hadoop, Spark)',
+          'MapReduce Paradigm',
+          'Data Warehousing (Redshift, BigQuery)',
+          'Real-Time Analytics',
+          'Ad Click Event Platform',
+        ],
+      },
     ],
   },
   {
-    id: 11,
-    title: '11. Microservices Architecture',
-    subtopics: [
-      'Monolith vs Microservices',
-      'Service Decomposition Strategies',
-      'API Gateway Pattern',
-      'Service Mesh',
-      'Inter-Service Communication',
-      'Distributed Tracing',
-      'Microservices Caveats',
-    ],
-  },
-  {
-    id: 12,
-    title: '12. Resiliency Patterns',
-    subtopics: [
-      'Common Failure Causes',
-      'Redundancy & Fault Isolation',
-      'Timeouts & Deadlines',
-      'Retry Strategies (Exponential Backoff)',
-      'Circuit Breaker Pattern',
-      'Bulkhead Pattern',
-      'Load Shedding & Load Leveling',
-      'Rate Limiting Algorithms',
-      'Shuffle Sharding',
-      'Cellular Architecture',
-    ],
-  },
-  {
-    id: 13,
-    title: '13. Cloud Infrastructure (AWS)',
-    subtopics: [
-      'AWS Services Part 1 (EC2, S3, RDS)',
-      'AWS Services Part 2 (Lambda, DynamoDB, ElastiCache)',
-      'Blob Storage Architecture',
-      'Auto Scaling & Elastic Load Balancing',
-      'AWS Dynamo DB & Redshift',
-    ],
-  },
-  {
-    id: 14,
-    title: '14. Control Planes & Data Planes',
-    subtopics: [
-      'Separation of Concerns',
-      'Scale Imbalance',
-      'Control Theory in Distributed Systems',
-      'Configuration Management',
-    ],
-  },
-  {
-    id: 15,
-    title: '15. Design Patterns for Scalable Systems',
-    subtopics: [
-      'Scalability Patterns Overview',
-      'Fan-Out Pattern',
-      'Sidecar Pattern',
-      'Strangler Fig Pattern',
-      'CQRS (Command Query Responsibility Segregation)',
-      'Event Sourcing',
-      'Constant Work Pattern',
-    ],
-  },
-  {
-    id: 16,
-    title: '16. Your First Real Designs',
-    subtopics: [
-      'URL Shortener',
-      'Notification Service (Push, Email, SMS)',
-      'Job Scheduling Platform',
-      'Rate Limiter Design',
-    ],
-  },
-  {
-    id: 17,
-    title: '17. Social & Communication Platforms',
-    subtopics: [
-      'Live News Feed System (Twitter/Facebook)',
-      'Chat System Design (WhatsApp)',
-      'Video Calls (Google Meet)',
-      '[Assignment] Design Tinder',
-    ],
-  },
-  {
-    id: 18,
-    title: '18. Marketplace & Booking Systems',
-    subtopics: [
-      'Hotel Reservation System',
-      'Booking.com Database Design',
-      'Uber Platform (Real-time Location)',
-      '[Assignment] Yelp App',
-    ],
-  },
-  {
-    id: 19,
-    title: '19. Search & Discovery Systems',
-    subtopics: [
-      'Google Search Engine (Crawling, Indexing, Ranking)',
-      'Inverted Index',
-      'K Heavy Hitter Problem',
-      'Top-K Frequent Items',
-    ],
-  },
-  {
-    id: 20,
-    title: '20. Media & Content Delivery',
-    subtopics: [
-      'Netflix Streaming Platform',
-      'Video Encoding & Adaptive Bitrate',
-      'Ad Click Event Platform',
-      'Real-Time Analytics',
-    ],
-  },
-  {
-    id: 21,
-    title: '21. Storage Systems & File Management',
-    subtopics: [
-      'Dropbox / File Storage Service',
-      'File System Internals',
-      'Blob Storage (S3-like)',
-      'Data Deduplication & Compression',
-      'Build Your Own Database (LSM Trees)',
-    ],
-  },
-  {
-    id: 22,
-    title: '22. Big Data & Analytics',
-    subtopics: [
-      'Big Data Processing (Hadoop, Spark)',
-      'MapReduce Paradigm',
-      'Batch vs Stream Processing',
-      'Data Warehousing',
-      'OLTP vs OLAP',
-    ],
-  },
-  {
-    id: 23,
-    title: '23. Advanced System Designs',
-    subtopics: [
-      'Stock Exchange Design',
-      'Payment Processing System',
-      'Distributed Lock Service',
-      'Configuration Service (like ZooKeeper)',
-    ],
-  },
-  {
-    id: 24,
-    title: '24. Observability & Operations',
-    subtopics: [
-      'Monitoring & Metrics',
-      'Service-Level Indicators (SLIs)',
-      'Service-Level Objectives (SLOs)',
-      'Alerts & Dashboards',
-      'Logs, Traces & Metrics',
-      'Distributed Tracing',
-      'Being On-Call',
-    ],
-  },
-  {
-    id: 25,
-    title: '25. Testing Distributed Systems',
-    subtopics: [
-      'Unit, Integration & E2E Testing',
-      'Chaos Engineering',
-      'Fault Injection',
-      'Formal Verification (TLA+)',
-      'Load Testing & Performance Testing',
-    ],
-  },
-  {
-    id: 26,
-    title: '26. Deployment & Release Management',
-    subtopics: [
-      'Continuous Integration & Delivery',
-      'Deployment Strategies (Blue-Green, Canary)',
-      'Feature Flags',
-      'Rollbacks & Rollforwards',
-      'Infrastructure as Code',
+    id: 'section-11',
+    section: 'SECTION XI: OPERATIONS',
+    chapters: [
+      {
+        id: 'ch-11-1',
+        title: 'Cloud Infrastructure',
+        topics: [
+          'AWS Services (EC2, S3, RDS)',
+          'AWS Lambda & Serverless',
+          'DynamoDB & ElastiCache',
+          'Auto Scaling & ELB',
+          'Multi-Region Architecture',
+        ],
+      },
+      {
+        id: 'ch-11-2',
+        title: 'Infrastructure Services',
+        topics: [
+          'Distributed Lock Service (Chubby/ZooKeeper)',
+          'Configuration Service',
+          'Secret Management',
+        ],
+      },
+      {
+        id: 'ch-11-3',
+        title: 'Observability',
+        topics: [
+          'Monitoring & Metrics',
+          'Logs, Traces & Metrics (3 Pillars)',
+          'Distributed Tracing',
+          'Debugging Production Issues',
+        ],
+      },
+      {
+        id: 'ch-11-4',
+        title: 'SRE Practices',
+        topics: [
+          'Service-Level Indicators (SLIs)',
+          'Service-Level Objectives (SLOs)',
+          'Error Budgets',
+          'Alerts & Dashboards',
+          'Being On-Call & Incident Response',
+        ],
+      },
+      {
+        id: 'ch-11-5',
+        title: 'Testing & Deployment',
+        topics: [
+          'Testing Strategies (Unit, Integration, E2E)',
+          'Chaos Engineering',
+          'Formal Verification (TLA+)',
+          'CI/CD Pipelines',
+          'Deployment Strategies (Blue-Green, Canary)',
+          'Feature Flags & Rollbacks',
+        ],
+      },
+      {
+        id: 'ch-11-6',
+        title: 'Advanced System Designs',
+        topics: [
+          'Stock Exchange Design',
+          'Payment Processing (Stripe/PayPal)',
+          'Distributed Gaming Leaderboard',
+          'NewSQL Databases (CockroachDB, Spanner)',
+        ],
+      },
     ],
   },
 ];
 
 function App() {
+  const [selectedTopic, setSelectedTopic] = useState('What is System Design?');
+  const [expandedSections, setExpandedSections] = useState({ 'section-1': true });
+  const [expandedChapters, setExpandedChapters] = useState({ 'ch-1-1': true });
 
-  const [selectedTopic, setSelectedTopic] = useState('Introduction');
-  const [expandedTopics, setExpandedTopics] = useState({
-    1: true, // Introduction expanded by default
-    2: false,
-    3: false,
-    4: false,
-  });
-
-  const toggleTopic = (topicId) => {
-    setExpandedTopics(prev => ({
+  const toggleSection = (sectionId) => {
+    setExpandedSections(prev => ({
       ...prev,
-      [topicId]: !prev[topicId]
+      [sectionId]: !prev[sectionId]
     }));
   };
 
-
+  const toggleChapter = (chapterId) => {
+    setExpandedChapters(prev => ({
+      ...prev,
+      [chapterId]: !prev[chapterId]
+    }));
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -432,7 +653,8 @@ function App() {
               width: drawerWidth,
               boxSizing: 'border-box',
               backgroundColor: 'background.paper',
-              borderRight: '1px solid rgba(232, 232, 232, 0.15)',
+              borderRight: '5px solid #00ff00',
+              boxShadow: '8px 0 0 0 #00ff00',
             },
           }}
         >
@@ -440,90 +662,142 @@ function App() {
           <Box
             sx={{
               p: 3,
-              pb: 2.5,
-              borderBottom: '1px solid rgba(232, 232, 232, 0.12)',
+              borderBottom: '5px solid #00ff00',
               backgroundColor: '#000',
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-              <MenuBookIcon sx={{ fontSize: 32, color: 'primary.main' }} />
-              <Typography variant="h6" sx={{ fontWeight: 600, fontSize: '1.25rem', color: '#f5f5f5', letterSpacing: '-0.01em' }}>
+              <MenuBookIcon sx={{ fontSize: 40, color: 'primary.main' }} />
+              <Typography variant="h6" sx={{ fontWeight: 900, fontSize: '1.5rem', color: '#fff' }}>
                 System Design
               </Typography>
             </Box>
-            <Typography variant="caption" sx={{ color: 'text.secondary', mt: 1.5, display: 'block', fontWeight: 500, fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-              From Scratch
+            <Typography variant="caption" sx={{ color: 'primary.main', mt: 1, display: 'block', fontWeight: 700, fontSize: '0.9rem' }}>
+              FROM SCRATCH
             </Typography>
           </Box>
 
-          {/* Topics List */}
+          {/* Curriculum List */}
           <Box sx={{ overflow: 'auto', py: 2 }}>
             <List disablePadding>
-              {topics.map((topic) => (
-                <Box key={topic.id}>
+              {curriculum.map((section) => (
+                <Box key={section.id}>
+                  {/* Section */}
                   <ListItem disablePadding>
                     <ListItemButton
-                      onClick={() => toggleTopic(topic.id)}
+                      onClick={() => toggleSection(section.id)}
                       sx={{
                         px: 2,
-                        py: 1.25,
-                        mx: 2,
+                        py: 1.5,
+                        mx: 1.5,
                         my: 0.5,
+                        border: '3px solid #00ff00',
+                        backgroundColor: expandedSections[section.id] ? '#00ff00' : 'transparent',
+                        boxShadow: expandedSections[section.id] ? '4px 4px 0 0 #fff' : 'none',
                         '&:hover': {
-                          backgroundColor: 'rgba(232, 232, 232, 0.08)',
+                          backgroundColor: '#00ff00',
+                          boxShadow: '4px 4px 0 0 #fff',
                         },
                       }}
                     >
                       <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-                        {expandedTopics[topic.id] ? (
-                          <ExpandMoreIcon sx={{ fontSize: 18, color: 'text.secondary', mr: 1 }} />
+                        {expandedSections[section.id] ? (
+                          <ExpandMoreIcon sx={{ fontSize: 20, color: '#000', mr: 1 }} />
                         ) : (
-                          <ChevronRightIcon sx={{ fontSize: 18, color: 'text.secondary', mr: 1 }} />
+                          <ChevronRightIcon sx={{ fontSize: 20, color: '#00ff00', mr: 1 }} />
                         )}
                         <ListItemText
-                          primary={topic.title}
+                          primary={section.section}
                           primaryTypographyProps={{
-                            fontWeight: 600,
-                            fontSize: '0.9375rem',
-                            color: 'text.secondary',
-                            letterSpacing: '-0.01em',
+                            fontWeight: 900,
+                            fontSize: '0.85rem',
+                            color: expandedSections[section.id] ? '#000' : 'primary.main',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.05em',
                           }}
                         />
                       </Box>
                     </ListItemButton>
                   </ListItem>
 
-                  {/* Subtopics - Collapsible */}
-                  <Collapse in={expandedTopics[topic.id]} timeout="auto" unmountOnExit>
-                    {topic.subtopics.map((subtopic) => (
-                      <ListItem key={subtopic} disablePadding>
-                        <ListItemButton
-                          onClick={() => setSelectedTopic(subtopic)}
-                          sx={{
-                            pl: 5.5,
-                            pr: 3,
-                            py: 0.875,
-                            mx: 2,
-                            my: 0.25,
-                            borderLeft: selectedTopic === subtopic ? '1px solid rgba(232, 232, 232, 0.3)' : '1px solid transparent',
-                            backgroundColor: selectedTopic === subtopic ? 'rgba(232, 232, 232, 0.05)' : 'transparent',
-                            '&:hover': {
-                              backgroundColor: 'rgba(232, 232, 232, 0.08)',
-                              borderLeft: '1px solid rgba(232, 232, 232, 0.3)',
-                            },
-                          }}
-                        >
-                          <ListItemText
-                            primary={subtopic}
-                            primaryTypographyProps={{
-                              fontSize: '0.8125rem',
-                              fontWeight: 400,
-                              color: selectedTopic === subtopic ? '#f5f5f5' : 'text.secondary',
-                            }}
-                          />
-                        </ListItemButton>
-                      </ListItem>
-                    ))}
+                  {/* Chapters within Section */}
+                  <Collapse in={expandedSections[section.id]} timeout="auto" unmountOnExit>
+                    <List disablePadding>
+                      {section.chapters.map((chapter) => (
+                        <Box key={chapter.id}>
+                          {/* Chapter */}
+                          <ListItem disablePadding>
+                            <ListItemButton
+                              onClick={() => toggleChapter(chapter.id)}
+                              sx={{
+                                pl: 4,
+                                pr: 2,
+                                py: 1,
+                                mx: 1.5,
+                                my: 0.3,
+                                border: '2px solid #ffff00',
+                                backgroundColor: expandedChapters[chapter.id] ? '#ffff00' : 'transparent',
+                                '&:hover': {
+                                  backgroundColor: '#ffff00',
+                                  boxShadow: '3px 3px 0 0 #fff',
+                                },
+                              }}
+                            >
+                              <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                                {expandedChapters[chapter.id] ? (
+                                  <ExpandMoreIcon sx={{ fontSize: 16, color: '#000', mr: 1 }} />
+                                ) : (
+                                  <ChevronRightIcon sx={{ fontSize: 16, color: '#ffff00', mr: 1 }} />
+                                )}
+                                <ListItemText
+                                  primary={chapter.title}
+                                  primaryTypographyProps={{
+                                    fontSize: '0.9rem',
+                                    fontWeight: 800,
+                                    color: expandedChapters[chapter.id] ? '#000' : 'warning.main',
+                                  }}
+                                />
+                              </Box>
+                            </ListItemButton>
+                          </ListItem>
+
+                          {/* Topics within Chapter */}
+                          <Collapse in={expandedChapters[chapter.id]} timeout="auto" unmountOnExit>
+                            <List disablePadding>
+                              {chapter.topics.map((topic) => (
+                                <ListItem key={topic} disablePadding>
+                                  <ListItemButton
+                                    onClick={() => setSelectedTopic(topic)}
+                                    sx={{
+                                      pl: 7,
+                                      pr: 2,
+                                      py: 0.8,
+                                      mx: 1.5,
+                                      my: 0.2,
+                                      border: selectedTopic === topic ? '2px solid #ff00ff' : '2px solid transparent',
+                                      backgroundColor: selectedTopic === topic ? '#ff00ff' : 'transparent',
+                                      '&:hover': {
+                                        backgroundColor: '#ff00ff',
+                                        border: '2px solid #ff00ff',
+                                      },
+                                    }}
+                                  >
+                                    <ListItemText
+                                      primary={topic}
+                                      primaryTypographyProps={{
+                                        fontSize: '0.8rem',
+                                        fontWeight: 600,
+                                        color: selectedTopic === topic ? '#000' : 'text.primary',
+                                      }}
+                                    />
+                                  </ListItemButton>
+                                </ListItem>
+                              ))}
+                            </List>
+                          </Collapse>
+                        </Box>
+                      ))}
+                    </List>
                   </Collapse>
                 </Box>
               ))}
@@ -548,74 +822,106 @@ function App() {
             }}
           >
             {/* Hero Section */}
-            <Box sx={{ mb: 8 }}>
+            <Box sx={{ mb: 6 }}>
               <Typography
                 variant="h1"
                 sx={{
-                  mb: 2.5,
-                  color: '#f5f5f5',
-                  letterSpacing: '-0.04em',
+                  mb: 3,
+                  color: '#00ff00',
+                  textShadow: '5px 5px 0 #ff00ff, 10px 10px 0 #ffff00',
                 }}
               >
                 Master System Design
               </Typography>
-              <Typography
-                variant="body1"
+              <Box
                 sx={{
-                  fontSize: '1.125rem',
-                  color: 'text.secondary',
-                  maxWidth: '650px',
-                  lineHeight: 1.8,
-                  fontWeight: 300,
+                  backgroundColor: '#ff00ff',
+                  border: '4px solid #000',
+                  boxShadow: '8px 8px 0 0 #00ff00',
+                  p: 3,
+                  maxWidth: '700px',
                 }}
               >
-                Learn how to design scalable, reliable, and efficient systems from the ground up.
-                A comprehensive guide for engineers and architects.
-              </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontSize: '1.25rem',
+                    color: '#000',
+                    fontWeight: 700,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  Learn how to design scalable, reliable, and efficient systems from the ground up.
+                  A comprehensive guide covering 11 sections, 50+ chapters, and 200+ topics.
+                </Typography>
+              </Box>
             </Box>
 
             {/* Current Topic Content */}
             <Box
               sx={{
-                backgroundColor: 'rgba(232, 232, 232, 0.02)',
-                p: 5,
-                border: '1px solid rgba(232, 232, 232, 0.12)',
+                backgroundColor: '#1a1a1a',
+                p: 4,
+                border: '5px solid #ffff00',
+                boxShadow: '10px 10px 0 0 #ff00ff',
               }}
             >
               <Typography
                 variant="h2"
                 sx={{
-                  mb: 3.5,
-                  color: '#f5f5f5',
+                  mb: 3,
+                  color: '#ffff00',
+                  textShadow: '3px 3px 0 #00ffff',
                 }}
               >
                 {selectedTopic}
               </Typography>
-              <Typography variant="body1" sx={{ mb: 2.5, color: 'text.secondary', lineHeight: 1.8 }}>
-                Welcome to the System Design course! This is Phase 1 - the foundation of our
-                book-style learning platform.
+              <Typography variant="body1" sx={{ mb: 2, color: '#fff' }}>
+                Welcome to the comprehensive System Design course! This curriculum is structured
+                with 11 major sections covering everything from foundations to production operations.
               </Typography>
-              <Typography variant="body1" sx={{ mb: 2.5, color: 'text.secondary', lineHeight: 1.8 }}>
-                In future phases, this content area will be populated with comprehensive lessons,
-                interactive diagrams, code examples, and real-world case studies.
+              <Typography variant="body1" sx={{ mb: 2, color: '#fff' }}>
+                Navigate through the 3-level hierarchy: <strong style={{ color: '#00ff00' }}>SECTIONS</strong> → <strong style={{ color: '#ffff00' }}>CHAPTERS</strong> → <strong style={{ color: '#ff00ff' }}>TOPICS</strong>
               </Typography>
-              <Typography variant="body1" sx={{ mt: 4, color: 'text.secondary', fontStyle: 'italic', lineHeight: 1.8 }}>
-                Select a topic from the sidebar to navigate through the course content.
-              </Typography>
+              <Box
+                sx={{
+                  mt: 4,
+                  p: 3,
+                  backgroundColor: '#00ffff',
+                  border: '4px solid #000',
+                  boxShadow: '6px 6px 0 0 #ff00ff',
+                }}
+              >
+                <Typography variant="body1" sx={{ color: '#000', fontWeight: 700 }}>
+                  Content for each topic will be added in the next phase. For now, explore the
+                  comprehensive curriculum structure in the sidebar!
+                </Typography>
+              </Box>
             </Box>
 
             {/* Footer Note */}
             <Box
               sx={{
-                mt: 8,
-                pt: 5,
-                borderTop: '1px solid rgba(232, 232, 232, 0.08)',
+                mt: 6,
+                pt: 4,
+                borderTop: '5px solid #00ff00',
                 textAlign: 'center',
               }}
             >
-              <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 400, fontSize: '0.8125rem', letterSpacing: '0.05em' }}>
-                Phase 1: Foundation Complete • Built with React + MUI
-              </Typography>
+              <Box
+                sx={{
+                  display: 'inline-block',
+                  backgroundColor: '#00ff00',
+                  border: '3px solid #000',
+                  boxShadow: '5px 5px 0 0 #fff',
+                  px: 4,
+                  py: 2,
+                }}
+              >
+                <Typography variant="body2" sx={{ color: '#000', fontWeight: 900, fontSize: '1rem' }}>
+                  11 SECTIONS • 50+ CHAPTERS • 200+ TOPICS • THEORY + PRACTICE
+                </Typography>
+              </Box>
             </Box>
           </Container>
         </Box>
