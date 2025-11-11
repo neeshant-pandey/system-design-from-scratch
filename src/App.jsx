@@ -705,16 +705,18 @@ function App() {
                         py: 1.25,
                         mx: 2,
                         my: 0.5,
-                        borderLeft: expandedSections[section.id] ? '2px solid rgba(232, 232, 232, 0.3)' : '2px solid transparent',
-                        backgroundColor: expandedSections[section.id] ? 'rgba(232, 232, 232, 0.05)' : 'transparent',
+                        borderLeft: expandedSections[section.id] ? '3px solid #facc15' : '3px solid transparent',
+                        backgroundColor: expandedSections[section.id] ? 'rgba(250, 204, 21, 0.1)' : 'transparent',
+                        transition: 'all 0.2s',
                         '&:hover': {
-                          backgroundColor: 'rgba(232, 232, 232, 0.08)',
+                          backgroundColor: 'rgba(250, 204, 21, 0.15)',
+                          borderLeft: '3px solid #facc15',
                         },
                       }}
                     >
                       <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                         {expandedSections[section.id] ? (
-                          <ExpandMoreIcon sx={{ fontSize: 18, color: 'text.secondary', mr: 1 }} />
+                          <ExpandMoreIcon sx={{ fontSize: 18, color: '#facc15', mr: 1 }} />
                         ) : (
                           <ChevronRightIcon sx={{ fontSize: 18, color: 'text.secondary', mr: 1 }} />
                         )}
@@ -723,7 +725,7 @@ function App() {
                           primaryTypographyProps={{
                             fontWeight: 600,
                             fontSize: '0.8125rem',
-                            color: 'text.secondary',
+                            color: expandedSections[section.id] ? '#facc15' : 'text.secondary',
                             letterSpacing: '0.05em',
                           }}
                         />
@@ -746,16 +748,18 @@ function App() {
                                 py: 1,
                                 mx: 2,
                                 my: 0.25,
-                                borderLeft: expandedChapters[chapter.id] ? '1px solid rgba(232, 232, 232, 0.25)' : '1px solid transparent',
-                                backgroundColor: expandedChapters[chapter.id] ? 'rgba(232, 232, 232, 0.03)' : 'transparent',
+                                borderLeft: expandedChapters[chapter.id] ? '2px solid #f97316' : '2px solid transparent',
+                                backgroundColor: expandedChapters[chapter.id] ? 'rgba(249, 115, 22, 0.1)' : 'transparent',
+                                transition: 'all 0.2s',
                                 '&:hover': {
-                                  backgroundColor: 'rgba(232, 232, 232, 0.06)',
+                                  backgroundColor: 'rgba(249, 115, 22, 0.15)',
+                                  borderLeft: '2px solid #f97316',
                                 },
                               }}
                             >
                               <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                                 {expandedChapters[chapter.id] ? (
-                                  <ExpandMoreIcon sx={{ fontSize: 16, color: 'text.secondary', mr: 1 }} />
+                                  <ExpandMoreIcon sx={{ fontSize: 16, color: '#f97316', mr: 1 }} />
                                 ) : (
                                   <ChevronRightIcon sx={{ fontSize: 16, color: 'text.secondary', mr: 1 }} />
                                 )}
@@ -764,7 +768,7 @@ function App() {
                                   primaryTypographyProps={{
                                     fontSize: '0.875rem',
                                     fontWeight: 500,
-                                    color: 'text.secondary',
+                                    color: expandedChapters[chapter.id] ? '#f97316' : 'text.secondary',
                                   }}
                                 />
                               </Box>
@@ -784,11 +788,12 @@ function App() {
                                       py: 0.75,
                                       mx: 2,
                                       my: 0.2,
-                                      borderLeft: selectedTopic === topic ? '1px solid rgba(232, 232, 232, 0.3)' : '1px solid transparent',
-                                      backgroundColor: selectedTopic === topic ? 'rgba(232, 232, 232, 0.05)' : 'transparent',
+                                      borderLeft: selectedTopic === topic ? '2px solid #8b5cf6' : '2px solid transparent',
+                                      backgroundColor: selectedTopic === topic ? 'rgba(139, 92, 246, 0.15)' : 'transparent',
+                                      transition: 'all 0.2s',
                                       '&:hover': {
-                                        backgroundColor: 'rgba(232, 232, 232, 0.08)',
-                                        borderLeft: '1px solid rgba(232, 232, 232, 0.3)',
+                                        backgroundColor: selectedTopic === topic ? 'rgba(139, 92, 246, 0.2)' : 'rgba(139, 92, 246, 0.1)',
+                                        borderLeft: '2px solid #a78bfa',
                                       },
                                     }}
                                   >
@@ -796,8 +801,8 @@ function App() {
                                       primary={topic}
                                       primaryTypographyProps={{
                                         fontSize: '0.8125rem',
-                                        fontWeight: 400,
-                                        color: selectedTopic === topic ? '#f5f5f5' : 'text.secondary',
+                                        fontWeight: selectedTopic === topic ? 500 : 400,
+                                        color: selectedTopic === topic ? '#a78bfa' : 'text.secondary',
                                       }}
                                     />
                                   </ListItemButton>
@@ -822,59 +827,45 @@ function App() {
             flexGrow: 1,
             backgroundColor: 'background.default',
             minHeight: '100vh',
+            p: 0,
           }}
         >
-          <Container
-            maxWidth="md"
+          {/* Current Topic Content - Full Width */}
+          <Box
             sx={{
-              py: 6,
-              px: { xs: 3, sm: 4, md: 6 },
+              minHeight: '100vh',
+              p: { xs: 3, sm: 4, md: 6 },
             }}
           >
-            {/* Hero Section */}
-            <Box sx={{ mb: 8 }}>
-              <Typography
-                variant="h1"
-                sx={{
-                  mb: 2.5,
-                  color: '#f5f5f5',
-                  letterSpacing: '-0.04em',
-                }}
-              >
-                Master System Design
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  fontSize: '1.125rem',
-                  color: 'text.secondary',
-                  maxWidth: '650px',
-                  lineHeight: 1.8,
-                  fontWeight: 300,
-                }}
-              >
-                Learn how to design scalable, reliable, and efficient systems from the ground up.
-                A comprehensive guide covering 11 sections, 50+ chapters, and 200+ topics.
-              </Typography>
-            </Box>
-
-            {/* Current Topic Content */}
+            {/* Topic Title with Accent */}
             <Box
               sx={{
-                backgroundColor: 'rgba(232, 232, 232, 0.02)',
-                p: 5,
-                border: '1px solid rgba(232, 232, 232, 0.12)',
+                mb: 5,
+                pb: 3,
+                borderBottom: '2px solid',
+                borderImage: 'linear-gradient(90deg, #facc15 0%, #f97316 50%, #8b5cf6 100%) 1',
               }}
             >
               <Typography
-                variant="h2"
+                variant="h1"
                 sx={{
-                  mb: 3.5,
                   color: '#f5f5f5',
+                  fontSize: { xs: '2rem', md: '2.5rem', lg: '3rem' },
+                  fontWeight: 700,
+                  letterSpacing: '-0.02em',
+                  mb: 1,
+                  background: 'linear-gradient(135deg, #facc15 0%, #f97316 50%, #ec4899 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
                 }}
               >
                 {selectedTopic}
               </Typography>
+            </Box>
+
+            {/* Content */}
+            <Box sx={{ maxWidth: '1400px', mx: 'auto' }}>
               {isLoading ? (
                 <Typography variant="body1" sx={{ color: 'text.secondary', fontStyle: 'italic' }}>
                   Loading content...
@@ -883,6 +874,7 @@ function App() {
                 <LatexRenderer content={topicContent} />
               )}
             </Box>
+          </Box>
 
             {/* Footer Note */}
             <Box
