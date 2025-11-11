@@ -1,0 +1,90 @@
+\section{What is System Design?}
+
+System design is the process of defining the \textbf{architecture}, \textbf{components}, \textbf{modules}, \textbf{interfaces}, and \textbf{data} for a system to satisfy specified requirements. It involves making high-level decisions about how different parts of the system will interact and work together to achieve desired functionality, performance, scalability, and reliability.
+
+\subsection{Breaking It Down}
+
+A \textit{system} is a collection of components that work together to perform a specific function or set of functions. We have \textbf{input}, it goes through the system, and we get \textbf{output}. System design is about how we structure and organize these components to achieve our goals.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{/assets/systemdefination.png}
+\caption{A simple representation of a system with input, processing, and output}
+\end{figure}
+
+\section{How Do We Design a System?}
+
+Here are some key steps involved in system design:
+
+\subsection{1. Understand the Requirements}
+
+We start by understanding the requirements of the system. What are the \textbf{functional} and \textbf{non-functional requirements}?
+
+\begin{itemize}
+\item \textbf{Functional requirements} define what the system should do
+\item \textbf{Non-functional requirements} specify how the system should perform (e.g., scalability, reliability, security)
+\end{itemize}
+
+\subsection{2. Identify Major Components}
+
+Next, we identify the major components of the system. These could include:
+
+\begin{itemize}
+\item Databases
+\item Servers
+\item Client applications
+\item Third-party services
+\end{itemize}
+
+We also define how these components will interact with each other through interfaces and protocols.
+
+\subsection{3. Make Architectural Decisions}
+
+Then, we make high-level architectural decisions. This involves choosing the overall structure of the system, such as:
+
+\begin{itemize}
+\item Whether to use a \textbf{monolithic architecture} or a \textbf{microservices architecture}
+\item Deciding on key technologies and frameworks to use
+\end{itemize}
+
+\subsection{4. Focus on Specific Design Aspects}
+
+After that, we focus on specific design aspects such as:
+
+\begin{itemize}
+\item Data storage
+\item Caching strategies
+\item Load balancing
+\item Fault tolerance
+\end{itemize}
+
+We need to ensure that the system can handle expected loads and recover from failures gracefully.
+
+\subsection{5. Document the Design}
+
+Finally, we document the design decisions and create diagrams to visualize the architecture. This documentation serves as a reference for developers and stakeholders throughout the development process.
+
+\section{Our Curriculum: A Structured Journey}
+
+This curriculum is designed to take you from \textit{zero to expert} in system design through a carefully structured progression:
+
+\subsection{The Learning Path}
+
+\textbf{Foundations First (Sections I-III):} We begin with fundamentals—understanding what system design is, learning estimation techniques, and mastering database basics. You'll explore communication patterns, networking, and data management before tackling complex problems.
+
+\textbf{Hands-On Practice (Sections IV-VI):} Once you have the foundations, you'll design real systems: URL shorteners, notification services, Netflix-like platforms, and Uber-like applications. This bridges theory and practice.
+
+\textbf{Advanced Concepts (Sections VII-IX):} Next, we dive deep into distributed systems coordination, consistency models, advanced architectural patterns, and resiliency strategies. These are the concepts that separate senior engineers from juniors.
+
+\textbf{Production-Ready Systems (Sections X-XI):} Finally, you'll learn about data streaming, cloud infrastructure, observability, and SRE practices—everything needed to build and operate production systems at scale.
+
+\subsection{Why This Structure Works}
+
+\begin{itemize}
+\item \textbf{Progressive complexity}: Each section builds on previous knowledge
+\item \textbf{Theory + Practice}: Every concept is reinforced with real-world system design examples
+\item \textbf{Interview-ready}: Covers all major topics asked in FAANG system design interviews
+\item \textbf{Production-focused}: Emphasizes patterns used in real production systems
+\end{itemize}
+
+By following this curriculum, you'll develop a \textit{systematic thinking process} for breaking down complex problems and designing scalable, reliable systems. Let's begin!
