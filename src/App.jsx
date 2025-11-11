@@ -705,18 +705,18 @@ function App() {
                         py: 1.25,
                         mx: 2,
                         my: 0.5,
-                        borderLeft: expandedSections[section.id] ? '3px solid #facc15' : '3px solid transparent',
-                        backgroundColor: expandedSections[section.id] ? 'rgba(250, 204, 21, 0.1)' : 'transparent',
-                        transition: 'all 0.2s',
+                        borderLeft: expandedSections[section.id] ? '2px solid #d4af37' : '2px solid transparent',
+                        backgroundColor: expandedSections[section.id] ? 'rgba(212, 175, 55, 0.08)' : 'transparent',
+                        transition: 'all 0.3s ease',
                         '&:hover': {
-                          backgroundColor: 'rgba(250, 204, 21, 0.15)',
-                          borderLeft: '3px solid #facc15',
+                          backgroundColor: 'rgba(212, 175, 55, 0.12)',
+                          borderLeft: '2px solid #d4af37',
                         },
                       }}
                     >
                       <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                         {expandedSections[section.id] ? (
-                          <ExpandMoreIcon sx={{ fontSize: 18, color: '#facc15', mr: 1 }} />
+                          <ExpandMoreIcon sx={{ fontSize: 18, color: '#d4af37', mr: 1 }} />
                         ) : (
                           <ChevronRightIcon sx={{ fontSize: 18, color: 'text.secondary', mr: 1 }} />
                         )}
@@ -725,7 +725,7 @@ function App() {
                           primaryTypographyProps={{
                             fontWeight: 600,
                             fontSize: '0.8125rem',
-                            color: expandedSections[section.id] ? '#facc15' : 'text.secondary',
+                            color: expandedSections[section.id] ? '#d4af37' : 'text.secondary',
                             letterSpacing: '0.05em',
                           }}
                         />
@@ -748,18 +748,18 @@ function App() {
                                 py: 1,
                                 mx: 2,
                                 my: 0.25,
-                                borderLeft: expandedChapters[chapter.id] ? '2px solid #f97316' : '2px solid transparent',
-                                backgroundColor: expandedChapters[chapter.id] ? 'rgba(249, 115, 22, 0.1)' : 'transparent',
-                                transition: 'all 0.2s',
+                                borderLeft: expandedChapters[chapter.id] ? '2px solid #94a3b8' : '2px solid transparent',
+                                backgroundColor: expandedChapters[chapter.id] ? 'rgba(148, 163, 184, 0.08)' : 'transparent',
+                                transition: 'all 0.3s ease',
                                 '&:hover': {
-                                  backgroundColor: 'rgba(249, 115, 22, 0.15)',
-                                  borderLeft: '2px solid #f97316',
+                                  backgroundColor: 'rgba(148, 163, 184, 0.12)',
+                                  borderLeft: '2px solid #94a3b8',
                                 },
                               }}
                             >
                               <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                                 {expandedChapters[chapter.id] ? (
-                                  <ExpandMoreIcon sx={{ fontSize: 16, color: '#f97316', mr: 1 }} />
+                                  <ExpandMoreIcon sx={{ fontSize: 16, color: '#94a3b8', mr: 1 }} />
                                 ) : (
                                   <ChevronRightIcon sx={{ fontSize: 16, color: 'text.secondary', mr: 1 }} />
                                 )}
@@ -768,7 +768,7 @@ function App() {
                                   primaryTypographyProps={{
                                     fontSize: '0.875rem',
                                     fontWeight: 500,
-                                    color: expandedChapters[chapter.id] ? '#f97316' : 'text.secondary',
+                                    color: expandedChapters[chapter.id] ? '#cbd5e1' : 'text.secondary',
                                   }}
                                 />
                               </Box>
@@ -788,12 +788,11 @@ function App() {
                                       py: 0.75,
                                       mx: 2,
                                       my: 0.2,
-                                      borderLeft: selectedTopic === topic ? '2px solid #8b5cf6' : '2px solid transparent',
-                                      backgroundColor: selectedTopic === topic ? 'rgba(139, 92, 246, 0.15)' : 'transparent',
-                                      transition: 'all 0.2s',
+                                      borderLeft: selectedTopic === topic ? '1px solid rgba(212, 175, 55, 0.5)' : '1px solid transparent',
+                                      backgroundColor: selectedTopic === topic ? 'rgba(212, 175, 55, 0.06)' : 'transparent',
+                                      transition: 'all 0.3s ease',
                                       '&:hover': {
-                                        backgroundColor: selectedTopic === topic ? 'rgba(139, 92, 246, 0.2)' : 'rgba(139, 92, 246, 0.1)',
-                                        borderLeft: '2px solid #a78bfa',
+                                        backgroundColor: selectedTopic === topic ? 'rgba(212, 175, 55, 0.1)' : 'rgba(212, 175, 55, 0.05)',
                                       },
                                     }}
                                   >
@@ -802,7 +801,7 @@ function App() {
                                       primaryTypographyProps={{
                                         fontSize: '0.8125rem',
                                         fontWeight: selectedTopic === topic ? 500 : 400,
-                                        color: selectedTopic === topic ? '#a78bfa' : 'text.secondary',
+                                        color: selectedTopic === topic ? '#e5c07b' : 'text.secondary',
                                       }}
                                     />
                                   </ListItemButton>
@@ -842,22 +841,17 @@ function App() {
               sx={{
                 mb: 5,
                 pb: 3,
-                borderBottom: '2px solid',
-                borderImage: 'linear-gradient(90deg, #facc15 0%, #f97316 50%, #8b5cf6 100%) 1',
+                borderBottom: '1px solid rgba(212, 175, 55, 0.15)',
               }}
             >
               <Typography
                 variant="h1"
                 sx={{
-                  color: '#f5f5f5',
+                  color: '#f8f8f8',
                   fontSize: { xs: '2rem', md: '2.5rem', lg: '3rem' },
-                  fontWeight: 700,
-                  letterSpacing: '-0.02em',
-                  mb: 1,
-                  background: 'linear-gradient(135deg, #facc15 0%, #f97316 50%, #ec4899 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
+                  fontWeight: 600,
+                  letterSpacing: '-0.03em',
+                  mb: 0.5,
                 }}
               >
                 {selectedTopic}
