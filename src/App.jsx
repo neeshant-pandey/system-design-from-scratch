@@ -102,7 +102,6 @@ const curriculum = [
         title: 'Introduction to System Design',
         topics: [
           'Understanding System Design',
-          'What is System Design?',
           'Communication, Coordination & Scalability',
           'Resiliency & Maintainability',
           'Anatomy of a Distributed System',
