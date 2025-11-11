@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Box,
   Drawer,
@@ -16,6 +16,8 @@ import {
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import LatexRenderer from './components/LatexRenderer';
+import { loadTopicContent } from './utils/contentLoader';
 
 // Sophisticated Minimal Theme
 const theme = createTheme({
@@ -622,6 +624,8 @@ function App() {
   const [selectedTopic, setSelectedTopic] = useState('What is System Design?');
   const [expandedSections, setExpandedSections] = useState({ 'section-1': true });
   const [expandedChapters, setExpandedChapters] = useState({ 'ch-1-1': true });
+  const [topicContent, setTopicContent] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const toggleSection = (sectionId) => {
     setExpandedSections(prev => ({
@@ -636,6 +640,18 @@ function App() {
       [chapterId]: !prev[chapterId]
     }));
   };
+
+  // Load content when topic changes
+  useEffect(() => {
+    const fetchContent = async () => {
+      setIsLoading(true);
+      const { content } = await loadTopicContent(curriculum, selectedTopic);
+      setTopicContent(content);
+      setIsLoading(false);
+    };
+
+    fetchContent();
+  }, [selectedTopic]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -859,25 +875,13 @@ function App() {
               >
                 {selectedTopic}
               </Typography>
-              <Typography variant="body1" sx={{ mb: 2.5, color: 'text.secondary', lineHeight: 1.8 }}>
-                Welcome to the comprehensive System Design course! This curriculum is structured
-                with 11 major sections covering everything from foundations to production operations.
-              </Typography>
-              <Typography variant="body1" sx={{ mb: 2.5, color: 'text.secondary', lineHeight: 1.8 }}>
-                Navigate through the 3-level hierarchy: <strong style={{ color: '#f5f5f5' }}>SECTIONS</strong> → <strong style={{ color: '#f5f5f5' }}>CHAPTERS</strong> → <strong style={{ color: '#f5f5f5' }}>TOPICS</strong>
-              </Typography>
-              <Box
-                sx={{
-                  mt: 4,
-                  pt: 4,
-                  borderTop: '1px solid rgba(232, 232, 232, 0.1)',
-                }}
-              >
-                <Typography variant="body1" sx={{ color: 'text.secondary', lineHeight: 1.8, fontStyle: 'italic' }}>
-                  Content for each topic will be added in the next phase. For now, explore the
-                  comprehensive curriculum structure in the sidebar.
+              {isLoading ? (
+                <Typography variant="body1" sx={{ color: 'text.secondary', fontStyle: 'italic' }}>
+                  Loading content...
                 </Typography>
-              </Box>
+              ) : (
+                <LatexRenderer content={topicContent} />
+              )}
             </Box>
 
             {/* Footer Note */}
