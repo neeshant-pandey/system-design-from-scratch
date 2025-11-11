@@ -1,0 +1,253 @@
+\section{Testing Syntax Highlighting}
+
+This is a test document to demonstrate syntax highlighting capabilities.
+
+\section{Python Code}
+
+Here's a Python example with the \texttt{lstlisting} environment:
+
+\begin{lstlisting}[language=python]
+def fibonacci(n):
+    """Calculate the nth Fibonacci number."""
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+# Test the function
+for i in range(10):
+    print(f"F({i}) = {fibonacci(i)}")
+\end{lstlisting}
+
+\section{JavaScript Code}
+
+Using \texttt{minted} syntax with JavaScript:
+
+\begin{minted}{javascript}
+class RateLimiter {
+  constructor(maxRequests, windowMs) {
+    this.maxRequests = maxRequests;
+    this.windowMs = windowMs;
+    this.requests = new Map();
+  }
+
+  async checkLimit(userId) {
+    const now = Date.now();
+    const userRequests = this.requests.get(userId) || [];
+
+    // Filter out old requests
+    const validRequests = userRequests.filter(
+      timestamp => now - timestamp < this.windowMs
+    );
+
+    if (validRequests.length >= this.maxRequests) {
+      return false; // Rate limit exceeded
+    }
+
+    validRequests.push(now);
+    this.requests.set(userId, validRequests);
+    return true;
+  }
+}
+
+// Usage
+const limiter = new RateLimiter(100, 60000); // 100 requests per minute
+\end{minted}
+
+\section{SQL Code}
+
+Database query example:
+
+\begin{lstlisting}[language=sql]
+-- Create users table with partitioning
+CREATE TABLE users (
+    user_id BIGINT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_login TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE
+) PARTITION BY RANGE (created_at);
+
+-- Create indexes for better performance
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_active ON users(is_active, last_login);
+
+-- Query with JOIN and aggregation
+SELECT
+    u.username,
+    COUNT(p.post_id) as post_count,
+    MAX(p.created_at) as last_post
+FROM users u
+LEFT JOIN posts p ON u.user_id = p.user_id
+WHERE u.is_active = TRUE
+GROUP BY u.user_id, u.username
+HAVING COUNT(p.post_id) > 10
+ORDER BY post_count DESC
+LIMIT 100;
+\end{lstlisting}
+
+\section{Go Code}
+
+Concurrent processing in Go:
+
+\begin{minted}{go}
+package main
+
+import (
+    "context"
+    "fmt"
+    "sync"
+    "time"
+)
+
+// Worker pool pattern
+type WorkerPool struct {
+    workers   int
+    tasks     chan Task
+    results   chan Result
+    wg        sync.WaitGroup
+}
+
+func NewWorkerPool(workers int) *WorkerPool {
+    return &WorkerPool{
+        workers: workers,
+        tasks:   make(chan Task, workers*2),
+        results: make(chan Result, workers*2),
+    }
+}
+
+func (wp *WorkerPool) Start(ctx context.Context) {
+    for i := 0; i < wp.workers; i++ {
+        wp.wg.Add(1)
+        go wp.worker(ctx, i)
+    }
+}
+
+func (wp *WorkerPool) worker(ctx context.Context, id int) {
+    defer wp.wg.Done()
+
+    for {
+        select {
+        case task := <-wp.tasks:
+            result := task.Process()
+            wp.results <- result
+        case <-ctx.Done():
+            return
+        }
+    }
+}
+\end{minted}
+
+\section{Plain Text / Pseudocode}
+
+For plain text or pseudocode, use \texttt{verbatim}:
+
+\begin{verbatim}
+Algorithm: Consistent Hashing
+
+Input: key, list of servers
+Output: selected server
+
+1. hash = hash_function(key)
+2. position = hash mod RING_SIZE
+3. Find the first server clockwise from position
+4. If no server found, wrap around to first server
+5. Return server
+
+Time Complexity: O(log n) with binary search
+Space Complexity: O(n) for server positions
+\end{verbatim}
+
+\section{Java Code}
+
+Object-oriented design example:
+
+\begin{lstlisting}[language=java]
+public class LoadBalancer {
+    private final List<Server> servers;
+    private final AtomicInteger currentIndex;
+    private final HealthChecker healthChecker;
+
+    public LoadBalancer(List<Server> servers) {
+        this.servers = new CopyOnWriteArrayList<>(servers);
+        this.currentIndex = new AtomicInteger(0);
+        this.healthChecker = new HealthChecker(this::removeUnhealthyServer);
+    }
+
+    public Server getNextServer() {
+        if (servers.isEmpty()) {
+            throw new NoAvailableServerException("No servers available");
+        }
+
+        int index = currentIndex.getAndIncrement() % servers.size();
+        return servers.get(index);
+    }
+
+    private void removeUnhealthyServer(Server server) {
+        servers.remove(server);
+        logger.warn("Removed unhealthy server: {}", server.getAddress());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("LoadBalancer[servers=%d, strategy=RoundRobin]",
+                           servers.size());
+    }
+}
+\end{lstlisting}
+
+\section{Rust Code}
+
+Systems programming with Rust:
+
+\begin{minted}{rust}
+use std::sync::{Arc, Mutex};
+use tokio::sync::mpsc;
+
+#[derive(Debug, Clone)]
+struct CacheEntry<T> {
+    value: T,
+    expires_at: u64,
+}
+
+pub struct DistributedCache<T> {
+    store: Arc<Mutex<HashMap<String, CacheEntry<T>>>>,
+    tx: mpsc::Sender<CacheCommand>,
+}
+
+impl<T: Clone + Send + 'static> DistributedCache<T> {
+    pub fn new(capacity: usize) -> Self {
+        let store = Arc::new(Mutex::new(HashMap::with_capacity(capacity)));
+        let (tx, rx) = mpsc::channel(100);
+
+        // Spawn background cleanup task
+        let store_clone = Arc::clone(&store);
+        tokio::spawn(async move {
+            Self::cleanup_loop(store_clone, rx).await;
+        });
+
+        DistributedCache { store, tx }
+    }
+
+    pub async fn get(&self, key: &str) -> Option<T> {
+        let store = self.store.lock().unwrap();
+        store.get(key)
+            .filter(|entry| entry.expires_at > current_timestamp())
+            .map(|entry| entry.value.clone())
+    }
+}
+\end{minted}
+
+\section{Conclusion}
+
+The syntax highlighter supports \textbf{multiple languages} including:
+
+\begin{itemize}
+\item Python, JavaScript, TypeScript
+\item Java, C++, C\#, Go, Rust
+\item SQL, Bash, Shell
+\item HTML, CSS, JSON, YAML
+\item And many more!
+\end{itemize}
+
+Use \texttt{lstlisting} or \texttt{minted} for highlighted code, and \texttt{verbatim} for plain text.

@@ -2,6 +2,8 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { InlineMath, BlockMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 /**
  * Parse LaTeX content and convert to React components
@@ -134,30 +136,72 @@ function parseLatexContent(latex) {
       continue;
     }
 
-    // Handle verbatim (code blocks)
-    if (line.startsWith('\\begin{verbatim}')) {
+    // Handle code blocks (verbatim, lstlisting, minted)
+    if (line.startsWith('\\begin{verbatim}') ||
+        line.startsWith('\\begin{lstlisting}') ||
+        line.startsWith('\\begin{minted}')) {
       let codeContent = '';
+      let language = 'text'; // default to plain text
+      let endTag = '\\end{verbatim}';
+
+      // Determine environment type and language
+      if (line.startsWith('\\begin{lstlisting}')) {
+        endTag = '\\end{lstlisting}';
+        // Extract language from [language=python] or similar
+        const langMatch = line.match(/\[.*?language\s*=\s*(\w+)/i);
+        if (langMatch) {
+          language = langMatch[1].toLowerCase();
+        }
+      } else if (line.startsWith('\\begin{minted}')) {
+        endTag = '\\end{minted}';
+        // Extract language from \begin{minted}{python}
+        const langMatch = line.match(/\\begin\{minted\}\{(\w+)\}/);
+        if (langMatch) {
+          language = langMatch[1].toLowerCase();
+        }
+      }
+
+      // Collect code content
       i++;
-      while (i < lines.length && !lines[i].trim().startsWith('\\end{verbatim}')) {
+      while (i < lines.length && !lines[i].trim().startsWith(endTag)) {
         codeContent += lines[i] + '\n';
         i++;
       }
+
+      // Render with syntax highlighting
       elements.push(
         <Box
           key={key++}
-          component="pre"
           sx={{
             my: 2,
-            p: 2,
-            bgcolor: 'rgba(255, 255, 255, 0.05)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderRadius: 0,
-            overflow: 'auto',
-            fontFamily: 'monospace',
-            fontSize: '0.9rem',
+            '& pre': {
+              margin: 0,
+              padding: '16px !important',
+              backgroundColor: '#1e1e1e !important',
+              border: '1px solid rgba(232, 232, 232, 0.12)',
+              borderRadius: 0,
+              fontSize: '0.875rem',
+            },
+            '& code': {
+              fontFamily: "'Fira Code', 'Consolas', 'Monaco', monospace",
+            },
           }}
         >
-          <code>{codeContent.trim()}</code>
+          <SyntaxHighlighter
+            language={language}
+            style={vscDarkPlus}
+            showLineNumbers={language !== 'text'}
+            wrapLines={true}
+            customStyle={{
+              margin: 0,
+              padding: '16px',
+              backgroundColor: '#1e1e1e',
+              border: '1px solid rgba(232, 232, 232, 0.12)',
+              borderRadius: 0,
+            }}
+          >
+            {codeContent.trim()}
+          </SyntaxHighlighter>
         </Box>
       );
       i++;

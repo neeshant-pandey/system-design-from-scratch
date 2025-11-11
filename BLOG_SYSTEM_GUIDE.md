@@ -85,16 +85,60 @@ $$
 $$
 ```
 
-#### Code Blocks
+#### Code Blocks with Syntax Highlighting
 
+The system supports **three ways** to include code blocks:
+
+**Option 1: `lstlisting` (Recommended)**
+```latex
+\begin{lstlisting}[language=python]
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+\end{lstlisting}
+```
+
+**Option 2: `minted`**
+```latex
+\begin{minted}{javascript}
+const rateLimit = async (userId) => {
+  const count = await redis.incr(`limit:${userId}`);
+  if (count === 1) {
+    await redis.expire(`limit:${userId}`, 3600);
+  }
+  return count <= 1000;
+};
+\end{minted}
+```
+
+**Option 3: `verbatim` (Plain text, no highlighting)**
 ```latex
 \begin{verbatim}
-function example() {
-  console.log("Code block");
-  return true;
-}
+Algorithm: Binary Search
+1. Set left = 0, right = array.length - 1
+2. While left <= right:
+   - mid = (left + right) / 2
+   - If target == array[mid], return mid
+   - Else if target < array[mid], right = mid - 1
+   - Else left = mid + 1
+3. Return -1 (not found)
 \end{verbatim}
 ```
+
+**Supported Languages:**
+- **Web:** javascript, typescript, html, css, jsx, tsx
+- **Backend:** python, java, go, rust, c, cpp, csharp, php
+- **Database:** sql, postgresql, mysql
+- **Config:** json, yaml, xml, toml
+- **Shell:** bash, shell, powershell
+- **And 100+ more languages!**
+
+Features:
+- ✅ Automatic syntax highlighting
+- ✅ Line numbers (for code with language)
+- ✅ Dark theme optimized (VS Code Dark+ theme)
+- ✅ Monospace font (Fira Code, Consolas, Monaco)
 
 #### Images
 
@@ -107,17 +151,28 @@ function example() {
 
 **Important:** Always use absolute paths starting with `/assets/`
 
-### 3. Example Blog Post
+### 3. Example Blog Posts
 
-See `content/section-1-foundations/ch-1-1-introduction-to-system-design/what-is-system-design.tex` for a complete example that demonstrates:
+**Complete Tutorial:**
+`content/section-1-foundations/ch-1-1-introduction-to-system-design/what-is-system-design.tex`
 
+Demonstrates:
 - Multiple heading levels
 - Text formatting (bold, italic, code)
 - Bullet and numbered lists
 - Nested lists
-- Code blocks
+- Code blocks with syntax highlighting
 - Math expressions (inline)
 - Structured sections with good flow
+
+**Syntax Highlighting Demo:**
+`content/section-1-foundations/ch-1-1-introduction-to-system-design/test-code-highlighting.tex`
+
+Showcases syntax highlighting for:
+- Python, JavaScript, Go, Java, Rust, SQL
+- Different code block environments (lstlisting, minted, verbatim)
+- Line numbers and dark theme styling
+- Multiple language examples in one document
 
 ## 🖼️ Adding Images
 
@@ -222,7 +277,14 @@ The system automatically constructs paths based on the curriculum structure in `
 - Make sure you're using supported LaTeX commands (see syntax above)
 - Check for unclosed braces `{}` or environments (`\begin{}` without `\end{}`)
 - Math expressions must be wrapped in `$` or `$$`
-- Code blocks must use `\begin{verbatim}` ... `\end{verbatim}`
+- Code blocks: use `\begin{verbatim}`, `\begin{lstlisting}`, or `\begin{minted}`
+
+**Code syntax highlighting not working?**
+- For `lstlisting`: use `[language=python]` format (in square brackets)
+- For `minted`: use `{python}` format (in curly braces)
+- Check language name is spelled correctly (all lowercase)
+- Use `verbatim` for plain text / pseudocode (no highlighting needed)
+- Supported: python, javascript, java, go, rust, sql, bash, and 100+ more
 
 **Images not showing?**
 - Use absolute paths: `/assets/...` not `./assets/...` or `../assets/...`
