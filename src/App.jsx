@@ -17,64 +17,62 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-// Brutal Neobrutalism Theme with Black
+// Sophisticated Minimal Theme
 const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#00ff00', // Bright lime green
+      main: '#e8e8e8', // Off-white
     },
     secondary: {
-      main: '#ff00ff', // Bright magenta
+      main: '#facc15', // Yellow accent
     },
     background: {
       default: '#000000',
-      paper: '#1a1a1a',
+      paper: '#0a0a0a',
     },
     text: {
-      primary: '#ffffff',
-      secondary: '#00ff00',
+      primary: '#f5f5f5', // Off-white
+      secondary: '#a8a8a8', // Muted gray
     },
     warning: {
-      main: '#ffff00', // Bright yellow
+      main: '#facc15', // Yellow
     },
     info: {
-      main: '#00ffff', // Bright cyan
+      main: '#e8e8e8', // Light off-white
     },
   },
   typography: {
     fontFamily: '"Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     h1: {
-      fontSize: '4rem',
-      fontWeight: 900,
+      fontSize: '3.5rem',
+      fontWeight: 700,
       lineHeight: 1.1,
-      letterSpacing: '-0.03em',
-      textTransform: 'uppercase',
+      letterSpacing: '-0.04em',
     },
     h2: {
-      fontSize: '2.5rem',
-      fontWeight: 900,
-      lineHeight: 1.2,
+      fontSize: '2rem',
+      fontWeight: 700,
+      lineHeight: 1.3,
       letterSpacing: '-0.02em',
-      textTransform: 'uppercase',
     },
     h3: {
-      fontSize: '1.75rem',
-      fontWeight: 800,
-      lineHeight: 1.3,
+      fontSize: '1.5rem',
+      fontWeight: 600,
+      lineHeight: 1.4,
     },
     body1: {
-      fontSize: '1.125rem',
-      lineHeight: 1.6,
-      fontWeight: 500,
+      fontSize: '1.0625rem',
+      lineHeight: 1.8,
+      fontWeight: 400,
     },
     h6: {
-      fontWeight: 900,
-      textTransform: 'uppercase',
+      fontWeight: 600,
+      letterSpacing: '0.05em',
     },
   },
   shape: {
-    borderRadius: 0, // No rounded corners - brutal sharp edges
+    borderRadius: 0,
   },
   components: {
     MuiCssBaseline: {
@@ -88,7 +86,7 @@ const theme = createTheme({
   },
 });
 
-const drawerWidth = 320;
+const drawerWidth = 280;
 
 // Complete System Design Curriculum - 3-Level Hierarchy
 // SECTION → CHAPTER → TOPICS
@@ -653,8 +651,7 @@ function App() {
               width: drawerWidth,
               boxSizing: 'border-box',
               backgroundColor: 'background.paper',
-              borderRight: '5px solid #00ff00',
-              boxShadow: '8px 0 0 0 #00ff00',
+              borderRight: '1px solid rgba(232, 232, 232, 0.15)',
             },
           }}
         >
@@ -662,18 +659,19 @@ function App() {
           <Box
             sx={{
               p: 3,
-              borderBottom: '5px solid #00ff00',
+              pb: 2.5,
+              borderBottom: '1px solid rgba(232, 232, 232, 0.12)',
               backgroundColor: '#000',
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-              <MenuBookIcon sx={{ fontSize: 40, color: 'primary.main' }} />
-              <Typography variant="h6" sx={{ fontWeight: 900, fontSize: '1.5rem', color: '#fff' }}>
+              <MenuBookIcon sx={{ fontSize: 32, color: 'primary.main' }} />
+              <Typography variant="h6" sx={{ fontWeight: 600, fontSize: '1.25rem', color: '#f5f5f5', letterSpacing: '-0.01em' }}>
                 System Design
               </Typography>
             </Box>
-            <Typography variant="caption" sx={{ color: 'primary.main', mt: 1, display: 'block', fontWeight: 700, fontSize: '0.9rem' }}>
-              FROM SCRATCH
+            <Typography variant="caption" sx={{ color: 'text.secondary', mt: 1.5, display: 'block', fontWeight: 500, fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+              From Scratch
             </Typography>
           </Box>
 
@@ -688,31 +686,28 @@ function App() {
                       onClick={() => toggleSection(section.id)}
                       sx={{
                         px: 2,
-                        py: 1.5,
-                        mx: 1.5,
+                        py: 1.25,
+                        mx: 2,
                         my: 0.5,
-                        border: '3px solid #00ff00',
-                        backgroundColor: expandedSections[section.id] ? '#00ff00' : 'transparent',
-                        boxShadow: expandedSections[section.id] ? '4px 4px 0 0 #fff' : 'none',
+                        borderLeft: expandedSections[section.id] ? '2px solid rgba(232, 232, 232, 0.3)' : '2px solid transparent',
+                        backgroundColor: expandedSections[section.id] ? 'rgba(232, 232, 232, 0.05)' : 'transparent',
                         '&:hover': {
-                          backgroundColor: '#00ff00',
-                          boxShadow: '4px 4px 0 0 #fff',
+                          backgroundColor: 'rgba(232, 232, 232, 0.08)',
                         },
                       }}
                     >
                       <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                         {expandedSections[section.id] ? (
-                          <ExpandMoreIcon sx={{ fontSize: 20, color: '#000', mr: 1 }} />
+                          <ExpandMoreIcon sx={{ fontSize: 18, color: 'text.secondary', mr: 1 }} />
                         ) : (
-                          <ChevronRightIcon sx={{ fontSize: 20, color: '#00ff00', mr: 1 }} />
+                          <ChevronRightIcon sx={{ fontSize: 18, color: 'text.secondary', mr: 1 }} />
                         )}
                         <ListItemText
                           primary={section.section}
                           primaryTypographyProps={{
-                            fontWeight: 900,
-                            fontSize: '0.85rem',
-                            color: expandedSections[section.id] ? '#000' : 'primary.main',
-                            textTransform: 'uppercase',
+                            fontWeight: 600,
+                            fontSize: '0.8125rem',
+                            color: 'text.secondary',
                             letterSpacing: '0.05em',
                           }}
                         />
@@ -733,28 +728,27 @@ function App() {
                                 pl: 4,
                                 pr: 2,
                                 py: 1,
-                                mx: 1.5,
-                                my: 0.3,
-                                border: '2px solid #ffff00',
-                                backgroundColor: expandedChapters[chapter.id] ? '#ffff00' : 'transparent',
+                                mx: 2,
+                                my: 0.25,
+                                borderLeft: expandedChapters[chapter.id] ? '1px solid rgba(232, 232, 232, 0.25)' : '1px solid transparent',
+                                backgroundColor: expandedChapters[chapter.id] ? 'rgba(232, 232, 232, 0.03)' : 'transparent',
                                 '&:hover': {
-                                  backgroundColor: '#ffff00',
-                                  boxShadow: '3px 3px 0 0 #fff',
+                                  backgroundColor: 'rgba(232, 232, 232, 0.06)',
                                 },
                               }}
                             >
                               <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                                 {expandedChapters[chapter.id] ? (
-                                  <ExpandMoreIcon sx={{ fontSize: 16, color: '#000', mr: 1 }} />
+                                  <ExpandMoreIcon sx={{ fontSize: 16, color: 'text.secondary', mr: 1 }} />
                                 ) : (
-                                  <ChevronRightIcon sx={{ fontSize: 16, color: '#ffff00', mr: 1 }} />
+                                  <ChevronRightIcon sx={{ fontSize: 16, color: 'text.secondary', mr: 1 }} />
                                 )}
                                 <ListItemText
                                   primary={chapter.title}
                                   primaryTypographyProps={{
-                                    fontSize: '0.9rem',
-                                    fontWeight: 800,
-                                    color: expandedChapters[chapter.id] ? '#000' : 'warning.main',
+                                    fontSize: '0.875rem',
+                                    fontWeight: 500,
+                                    color: 'text.secondary',
                                   }}
                                 />
                               </Box>
@@ -769,25 +763,25 @@ function App() {
                                   <ListItemButton
                                     onClick={() => setSelectedTopic(topic)}
                                     sx={{
-                                      pl: 7,
+                                      pl: 6.5,
                                       pr: 2,
-                                      py: 0.8,
-                                      mx: 1.5,
+                                      py: 0.75,
+                                      mx: 2,
                                       my: 0.2,
-                                      border: selectedTopic === topic ? '2px solid #ff00ff' : '2px solid transparent',
-                                      backgroundColor: selectedTopic === topic ? '#ff00ff' : 'transparent',
+                                      borderLeft: selectedTopic === topic ? '1px solid rgba(232, 232, 232, 0.3)' : '1px solid transparent',
+                                      backgroundColor: selectedTopic === topic ? 'rgba(232, 232, 232, 0.05)' : 'transparent',
                                       '&:hover': {
-                                        backgroundColor: '#ff00ff',
-                                        border: '2px solid #ff00ff',
+                                        backgroundColor: 'rgba(232, 232, 232, 0.08)',
+                                        borderLeft: '1px solid rgba(232, 232, 232, 0.3)',
                                       },
                                     }}
                                   >
                                     <ListItemText
                                       primary={topic}
                                       primaryTypographyProps={{
-                                        fontSize: '0.8rem',
-                                        fontWeight: 600,
-                                        color: selectedTopic === topic ? '#000' : 'text.primary',
+                                        fontSize: '0.8125rem',
+                                        fontWeight: 400,
+                                        color: selectedTopic === topic ? '#f5f5f5' : 'text.secondary',
                                       }}
                                     />
                                   </ListItemButton>
@@ -822,79 +816,66 @@ function App() {
             }}
           >
             {/* Hero Section */}
-            <Box sx={{ mb: 6 }}>
+            <Box sx={{ mb: 8 }}>
               <Typography
                 variant="h1"
                 sx={{
-                  mb: 3,
-                  color: '#00ff00',
-                  textShadow: '5px 5px 0 #ff00ff, 10px 10px 0 #ffff00',
+                  mb: 2.5,
+                  color: '#f5f5f5',
+                  letterSpacing: '-0.04em',
                 }}
               >
                 Master System Design
               </Typography>
-              <Box
+              <Typography
+                variant="body1"
                 sx={{
-                  backgroundColor: '#ff00ff',
-                  border: '4px solid #000',
-                  boxShadow: '8px 8px 0 0 #00ff00',
-                  p: 3,
-                  maxWidth: '700px',
+                  fontSize: '1.125rem',
+                  color: 'text.secondary',
+                  maxWidth: '650px',
+                  lineHeight: 1.8,
+                  fontWeight: 300,
                 }}
               >
-                <Typography
-                  variant="body1"
-                  sx={{
-                    fontSize: '1.25rem',
-                    color: '#000',
-                    fontWeight: 700,
-                    lineHeight: 1.5,
-                  }}
-                >
-                  Learn how to design scalable, reliable, and efficient systems from the ground up.
-                  A comprehensive guide covering 11 sections, 50+ chapters, and 200+ topics.
-                </Typography>
-              </Box>
+                Learn how to design scalable, reliable, and efficient systems from the ground up.
+                A comprehensive guide covering 11 sections, 50+ chapters, and 200+ topics.
+              </Typography>
             </Box>
 
             {/* Current Topic Content */}
             <Box
               sx={{
-                backgroundColor: '#1a1a1a',
-                p: 4,
-                border: '5px solid #ffff00',
-                boxShadow: '10px 10px 0 0 #ff00ff',
+                backgroundColor: 'rgba(232, 232, 232, 0.02)',
+                p: 5,
+                border: '1px solid rgba(232, 232, 232, 0.12)',
               }}
             >
               <Typography
                 variant="h2"
                 sx={{
-                  mb: 3,
-                  color: '#ffff00',
-                  textShadow: '3px 3px 0 #00ffff',
+                  mb: 3.5,
+                  color: '#f5f5f5',
                 }}
               >
                 {selectedTopic}
               </Typography>
-              <Typography variant="body1" sx={{ mb: 2, color: '#fff' }}>
+              <Typography variant="body1" sx={{ mb: 2.5, color: 'text.secondary', lineHeight: 1.8 }}>
                 Welcome to the comprehensive System Design course! This curriculum is structured
                 with 11 major sections covering everything from foundations to production operations.
               </Typography>
-              <Typography variant="body1" sx={{ mb: 2, color: '#fff' }}>
-                Navigate through the 3-level hierarchy: <strong style={{ color: '#00ff00' }}>SECTIONS</strong> → <strong style={{ color: '#ffff00' }}>CHAPTERS</strong> → <strong style={{ color: '#ff00ff' }}>TOPICS</strong>
+              <Typography variant="body1" sx={{ mb: 2.5, color: 'text.secondary', lineHeight: 1.8 }}>
+                Navigate through the 3-level hierarchy: <strong style={{ color: '#f5f5f5' }}>SECTIONS</strong> → <strong style={{ color: '#f5f5f5' }}>CHAPTERS</strong> → <strong style={{ color: '#f5f5f5' }}>TOPICS</strong>
               </Typography>
               <Box
                 sx={{
                   mt: 4,
-                  p: 3,
-                  backgroundColor: '#00ffff',
-                  border: '4px solid #000',
-                  boxShadow: '6px 6px 0 0 #ff00ff',
+                  pt: 4,
+                  borderTop: '1px solid rgba(232, 232, 232, 0.1)',
                 }}
               >
-                <Typography variant="body1" sx={{ color: '#000', fontWeight: 700 }}>
+                <Typography variant="body1" sx={{ color: 'text.secondary', lineHeight: 1.8, fontStyle: 'italic' }}>
                   Content for each topic will be added in the next phase. For now, explore the
-                  comprehensive curriculum structure in the sidebar!
+                  comprehensive curriculum structure in the sidebar.
                 </Typography>
               </Box>
             </Box>
@@ -902,26 +883,22 @@ function App() {
             {/* Footer Note */}
             <Box
               sx={{
-                mt: 6,
-                pt: 4,
-                borderTop: '5px solid #00ff00',
-                textAlign: 'center',
+                mt: 8,
+                pt: 5,
+                borderTop: '1px solid rgba(232, 232, 232, 0.1)',
               }}
             >
-              <Box
+              <Typography
+                variant="caption"
                 sx={{
-                  display: 'inline-block',
-                  backgroundColor: '#00ff00',
-                  border: '3px solid #000',
-                  boxShadow: '5px 5px 0 0 #fff',
-                  px: 4,
-                  py: 2,
+                  color: 'text.secondary',
+                  fontSize: '0.8125rem',
+                  letterSpacing: '0.05em',
+                  textTransform: 'uppercase',
                 }}
               >
-                <Typography variant="body2" sx={{ color: '#000', fontWeight: 900, fontSize: '1rem' }}>
-                  11 SECTIONS • 50+ CHAPTERS • 200+ TOPICS • THEORY + PRACTICE
-                </Typography>
-              </Box>
+                11 Sections • 50+ Chapters • 200+ Topics • Theory + Practice
+              </Typography>
             </Box>
           </Container>
         </Box>
