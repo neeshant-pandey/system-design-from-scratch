@@ -13,63 +13,65 @@ import {
   CssBaseline,
   ThemeProvider,
   createTheme,
+  Collapse,
+  IconButton,
 } from '@mui/material';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-// Brutal Neobrutalism Theme with Black
+// Sophisticated Minimal Theme
 const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#00ff00', // Bright lime green
+      main: '#e8e8e8', // Off-white
     },
     secondary: {
-      main: '#ff00ff', // Bright magenta
+      main: '#facc15', // Yellow accent
     },
     background: {
       default: '#000000',
-      paper: '#1a1a1a',
+      paper: '#0a0a0a',
     },
     text: {
-      primary: '#ffffff',
-      secondary: '#00ff00',
+      primary: '#f5f5f5', // Off-white
+      secondary: '#a8a8a8', // Muted gray
     },
     warning: {
-      main: '#ffff00', // Bright yellow
+      main: '#facc15', // Yellow
     },
     info: {
-      main: '#00ffff', // Bright cyan
+      main: '#e8e8e8', // Light off-white
     },
   },
   typography: {
     fontFamily: '"Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     h1: {
-      fontSize: '4rem',
-      fontWeight: 900,
+      fontSize: '3.5rem',
+      fontWeight: 700,
       lineHeight: 1.1,
-      letterSpacing: '-0.03em',
-      textTransform: 'uppercase',
+      letterSpacing: '-0.04em',
     },
     h2: {
-      fontSize: '2.5rem',
-      fontWeight: 900,
-      lineHeight: 1.2,
+      fontSize: '2rem',
+      fontWeight: 700,
+      lineHeight: 1.3,
       letterSpacing: '-0.02em',
-      textTransform: 'uppercase',
     },
     h3: {
-      fontSize: '1.75rem',
-      fontWeight: 800,
-      lineHeight: 1.3,
+      fontSize: '1.5rem',
+      fontWeight: 600,
+      lineHeight: 1.4,
     },
     body1: {
-      fontSize: '1.125rem',
-      lineHeight: 1.6,
-      fontWeight: 500,
+      fontSize: '1.0625rem',
+      lineHeight: 1.8,
+      fontWeight: 400,
     },
     h6: {
-      fontWeight: 900,
-      textTransform: 'uppercase',
+      fontWeight: 600,
+      letterSpacing: '0.05em',
     },
   },
   shape: {
@@ -398,7 +400,23 @@ const topics = [
 ];
 
 function App() {
-  const [selectedTopic, setSelectedTopic] = useState('Introduction to System Design');
+
+  const [selectedTopic, setSelectedTopic] = useState('Introduction');
+  const [expandedTopics, setExpandedTopics] = useState({
+    1: true, // Introduction expanded by default
+    2: false,
+    3: false,
+    4: false,
+  });
+
+  const toggleTopic = (topicId) => {
+    setExpandedTopics(prev => ({
+      ...prev,
+      [topicId]: !prev[topicId]
+    }));
+  };
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -414,8 +432,7 @@ function App() {
               width: drawerWidth,
               boxSizing: 'border-box',
               backgroundColor: 'background.paper',
-              borderRight: '5px solid #00ff00',
-              boxShadow: '8px 0 0 0 #00ff00',
+              borderRight: '1px solid rgba(232, 232, 232, 0.15)',
             },
           }}
         >
@@ -423,18 +440,19 @@ function App() {
           <Box
             sx={{
               p: 3,
-              borderBottom: '5px solid #00ff00',
+              pb: 2.5,
+              borderBottom: '1px solid rgba(232, 232, 232, 0.12)',
               backgroundColor: '#000',
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-              <MenuBookIcon sx={{ fontSize: 40, color: 'primary.main' }} />
-              <Typography variant="h6" sx={{ fontWeight: 900, fontSize: '1.5rem', color: '#fff' }}>
+              <MenuBookIcon sx={{ fontSize: 32, color: 'primary.main' }} />
+              <Typography variant="h6" sx={{ fontWeight: 600, fontSize: '1.25rem', color: '#f5f5f5', letterSpacing: '-0.01em' }}>
                 System Design
               </Typography>
             </Box>
-            <Typography variant="caption" sx={{ color: 'primary.main', mt: 1, display: 'block', fontWeight: 700, fontSize: '0.9rem' }}>
-              FROM SCRATCH
+            <Typography variant="caption" sx={{ color: 'text.secondary', mt: 1.5, display: 'block', fontWeight: 500, fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+              From Scratch
             </Typography>
           </Box>
 
@@ -445,64 +463,68 @@ function App() {
                 <Box key={topic.id}>
                   <ListItem disablePadding>
                     <ListItemButton
-                      onClick={() => setSelectedTopic(topic.title)}
+                      onClick={() => toggleTopic(topic.id)}
                       sx={{
-                        px: 3,
-                        py: 1.5,
+                        px: 2,
+                        py: 1.25,
                         mx: 2,
                         my: 0.5,
-                        border: selectedTopic === topic.title ? '3px solid #00ff00' : '3px solid transparent',
-                        backgroundColor: selectedTopic === topic.title ? '#00ff00' : 'transparent',
-                        boxShadow: selectedTopic === topic.title ? '4px 4px 0 0 #fff' : 'none',
                         '&:hover': {
-                          backgroundColor: '#00ff00',
-                          border: '3px solid #00ff00',
-                          boxShadow: '4px 4px 0 0 #fff',
+                          backgroundColor: 'rgba(232, 232, 232, 0.08)',
                         },
                       }}
                     >
-                      <ListItemText
-                        primary={topic.title}
-                        primaryTypographyProps={{
-                          fontWeight: 800,
-                          fontSize: '1rem',
-                          color: selectedTopic === topic.title ? '#000' : 'text.primary',
-                          textTransform: 'uppercase',
-                        }}
-                      />
-                    </ListItemButton>
-                  </ListItem>
-                  {/* Subtopics */}
-                  {topic.subtopics.map((subtopic) => (
-                    <ListItem key={subtopic} disablePadding>
-                      <ListItemButton
-                        onClick={() => setSelectedTopic(subtopic)}
-                        sx={{
-                          pl: 5,
-                          pr: 3,
-                          py: 1,
-                          mx: 2,
-                          my: 0.3,
-                          border: selectedTopic === subtopic ? '2px solid #ffff00' : '2px solid transparent',
-                          backgroundColor: selectedTopic === subtopic ? '#ffff00' : 'transparent',
-                          '&:hover': {
-                            backgroundColor: '#ffff00',
-                            border: '2px solid #ffff00',
-                            boxShadow: '3px 3px 0 0 #fff',
-                          },
-                        }}
-                      >
+                      <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                        {expandedTopics[topic.id] ? (
+                          <ExpandMoreIcon sx={{ fontSize: 18, color: 'text.secondary', mr: 1 }} />
+                        ) : (
+                          <ChevronRightIcon sx={{ fontSize: 18, color: 'text.secondary', mr: 1 }} />
+                        )}
                         <ListItemText
-                          primary={subtopic}
+                          primary={topic.title}
                           primaryTypographyProps={{
-                            fontSize: '0.85rem',
-                            fontWeight: 700,
-                            color: selectedTopic === subtopic ? '#000' : 'text.secondary',
+                            fontWeight: 600,
+                            fontSize: '0.9375rem',
+                            color: 'text.secondary',
+                            letterSpacing: '-0.01em',
                           }}
                         />
-                      </ListItemButton>
-                    </ListItem>
-                  ))}
+                      </Box>
+                    </ListItemButton>
+                  </ListItem>
+
+                  {/* Subtopics - Collapsible */}
+                  <Collapse in={expandedTopics[topic.id]} timeout="auto" unmountOnExit>
+                    {topic.subtopics.map((subtopic) => (
+                      <ListItem key={subtopic} disablePadding>
+                        <ListItemButton
+                          onClick={() => setSelectedTopic(subtopic)}
+                          sx={{
+                            pl: 5.5,
+                            pr: 3,
+                            py: 0.875,
+                            mx: 2,
+                            my: 0.25,
+                            borderLeft: selectedTopic === subtopic ? '1px solid rgba(232, 232, 232, 0.3)' : '1px solid transparent',
+                            backgroundColor: selectedTopic === subtopic ? 'rgba(232, 232, 232, 0.05)' : 'transparent',
+                            '&:hover': {
+                              backgroundColor: 'rgba(232, 232, 232, 0.08)',
+                              borderLeft: '1px solid rgba(232, 232, 232, 0.3)',
+                            },
+                          }}
+                        >
+                          <ListItemText
+                            primary={subtopic}
+                            primaryTypographyProps={{
+                              fontSize: '0.8125rem',
+                              fontWeight: 400,
+                              color: selectedTopic === subtopic ? '#f5f5f5' : 'text.secondary',
+                            }}
+                          />
+                        </ListItemButton>
+                      </ListItem>
+                    ))}
+                  </Collapse>
                 </Box>
               ))}
             </List>
@@ -526,106 +548,74 @@ function App() {
             }}
           >
             {/* Hero Section */}
-            <Box sx={{ mb: 6 }}>
+            <Box sx={{ mb: 8 }}>
               <Typography
                 variant="h1"
                 sx={{
-                  mb: 3,
-                  color: '#00ff00',
-                  textShadow: '5px 5px 0 #ff00ff, 10px 10px 0 #ffff00',
+                  mb: 2.5,
+                  color: '#f5f5f5',
+                  letterSpacing: '-0.04em',
                 }}
               >
                 Master System Design
               </Typography>
-              <Box
+              <Typography
+                variant="body1"
                 sx={{
-                  backgroundColor: '#ff00ff',
-                  border: '4px solid #000',
-                  boxShadow: '8px 8px 0 0 #00ff00',
-                  p: 3,
-                  maxWidth: '700px',
+                  fontSize: '1.125rem',
+                  color: 'text.secondary',
+                  maxWidth: '650px',
+                  lineHeight: 1.8,
+                  fontWeight: 300,
                 }}
               >
-                <Typography
-                  variant="body1"
-                  sx={{
-                    fontSize: '1.25rem',
-                    color: '#000',
-                    fontWeight: 700,
-                    lineHeight: 1.5,
-                  }}
-                >
-                  Learn how to design scalable, reliable, and efficient systems from the ground up.
-                  A comprehensive guide for engineers and architects.
-                </Typography>
-              </Box>
+                Learn how to design scalable, reliable, and efficient systems from the ground up.
+                A comprehensive guide for engineers and architects.
+              </Typography>
             </Box>
 
             {/* Current Topic Content */}
             <Box
               sx={{
-                backgroundColor: '#1a1a1a',
-                p: 4,
-                border: '5px solid #ffff00',
-                boxShadow: '10px 10px 0 0 #ff00ff',
+                backgroundColor: 'rgba(232, 232, 232, 0.02)',
+                p: 5,
+                border: '1px solid rgba(232, 232, 232, 0.12)',
               }}
             >
               <Typography
                 variant="h2"
                 sx={{
-                  mb: 3,
-                  color: '#ffff00',
-                  textShadow: '3px 3px 0 #00ffff',
+                  mb: 3.5,
+                  color: '#f5f5f5',
                 }}
               >
                 {selectedTopic}
               </Typography>
-              <Typography variant="body1" sx={{ mb: 2, color: '#fff' }}>
+              <Typography variant="body1" sx={{ mb: 2.5, color: 'text.secondary', lineHeight: 1.8 }}>
                 Welcome to the System Design course! This is Phase 1 - the foundation of our
                 book-style learning platform.
               </Typography>
-              <Typography variant="body1" sx={{ mb: 2, color: '#fff' }}>
+              <Typography variant="body1" sx={{ mb: 2.5, color: 'text.secondary', lineHeight: 1.8 }}>
                 In future phases, this content area will be populated with comprehensive lessons,
                 interactive diagrams, code examples, and real-world case studies.
               </Typography>
-              <Box
-                sx={{
-                  mt: 4,
-                  p: 3,
-                  backgroundColor: '#00ffff',
-                  border: '4px solid #000',
-                  boxShadow: '6px 6px 0 0 #ff00ff',
-                }}
-              >
-                <Typography variant="body1" sx={{ color: '#000', fontWeight: 700 }}>
-                  Select a topic from the sidebar to navigate through the course content.
-                </Typography>
-              </Box>
+              <Typography variant="body1" sx={{ mt: 4, color: 'text.secondary', fontStyle: 'italic', lineHeight: 1.8 }}>
+                Select a topic from the sidebar to navigate through the course content.
+              </Typography>
             </Box>
 
             {/* Footer Note */}
             <Box
               sx={{
-                mt: 6,
-                pt: 4,
-                borderTop: '5px solid #00ff00',
+                mt: 8,
+                pt: 5,
+                borderTop: '1px solid rgba(232, 232, 232, 0.08)',
                 textAlign: 'center',
               }}
             >
-              <Box
-                sx={{
-                  display: 'inline-block',
-                  backgroundColor: '#00ff00',
-                  border: '3px solid #000',
-                  boxShadow: '5px 5px 0 0 #fff',
-                  px: 4,
-                  py: 2,
-                }}
-              >
-                <Typography variant="body2" sx={{ color: '#000', fontWeight: 900, fontSize: '1rem' }}>
-                  PHASE 1: FOUNDATION COMPLETE ✓ • BUILT WITH REACT + MUI
-                </Typography>
-              </Box>
+              <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 400, fontSize: '0.8125rem', letterSpacing: '0.05em' }}>
+                Phase 1: Foundation Complete • Built with React + MUI
+              </Typography>
             </Box>
           </Container>
         </Box>
