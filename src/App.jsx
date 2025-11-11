@@ -21,24 +21,24 @@ const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#00ff00', // Bright lime green
+      main: '#facc15', // Yellow
     },
     secondary: {
-      main: '#ff00ff', // Bright magenta
+      main: '#ef4444', // Red
     },
     background: {
       default: '#000000',
       paper: '#1a1a1a',
     },
     text: {
-      primary: '#ffffff',
-      secondary: '#00ff00',
+      primary: '#f5f5f5', // Off-white
+      secondary: '#facc15', // Yellow
     },
     warning: {
-      main: '#ffff00', // Bright yellow
+      main: '#ef4444', // Red
     },
     info: {
-      main: '#00ffff', // Bright cyan
+      main: '#e8e8e8', // Light off-white
     },
   },
   typography: {
@@ -114,8 +114,8 @@ function App() {
               width: drawerWidth,
               boxSizing: 'border-box',
               backgroundColor: 'background.paper',
-              borderRight: '5px solid #00ff00',
-              boxShadow: '8px 0 0 0 #00ff00',
+              borderRight: '5px solid #facc15',
+              boxShadow: '8px 0 0 0 #facc15',
             },
           }}
         >
@@ -123,13 +123,13 @@ function App() {
           <Box
             sx={{
               p: 3,
-              borderBottom: '5px solid #00ff00',
+              borderBottom: '5px solid #facc15',
               backgroundColor: '#000',
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
               <MenuBookIcon sx={{ fontSize: 40, color: 'primary.main' }} />
-              <Typography variant="h6" sx={{ fontWeight: 900, fontSize: '1.5rem', color: '#fff' }}>
+              <Typography variant="h6" sx={{ fontWeight: 900, fontSize: '1.5rem', color: '#f5f5f5' }}>
                 System Design
               </Typography>
             </Box>
@@ -151,13 +151,13 @@ function App() {
                         py: 1.5,
                         mx: 2,
                         my: 0.5,
-                        border: selectedTopic === topic.title ? '3px solid #00ff00' : '3px solid transparent',
-                        backgroundColor: selectedTopic === topic.title ? '#00ff00' : 'transparent',
-                        boxShadow: selectedTopic === topic.title ? '4px 4px 0 0 #fff' : 'none',
+                        border: selectedTopic === topic.title ? '3px solid #facc15' : '3px solid transparent',
+                        backgroundColor: selectedTopic === topic.title ? '#facc15' : 'transparent',
+                        boxShadow: selectedTopic === topic.title ? '4px 4px 0 0 #f5f5f5' : 'none',
                         '&:hover': {
-                          backgroundColor: '#00ff00',
-                          border: '3px solid #00ff00',
-                          boxShadow: '4px 4px 0 0 #fff',
+                          backgroundColor: '#facc15',
+                          border: '3px solid #facc15',
+                          boxShadow: '4px 4px 0 0 #f5f5f5',
                         },
                       }}
                     >
@@ -183,12 +183,12 @@ function App() {
                           py: 1,
                           mx: 2,
                           my: 0.3,
-                          border: selectedTopic === subtopic ? '2px solid #ffff00' : '2px solid transparent',
-                          backgroundColor: selectedTopic === subtopic ? '#ffff00' : 'transparent',
+                          border: selectedTopic === subtopic ? '2px solid #ef4444' : '2px solid transparent',
+                          backgroundColor: selectedTopic === subtopic ? '#ef4444' : 'transparent',
                           '&:hover': {
-                            backgroundColor: '#ffff00',
-                            border: '2px solid #ffff00',
-                            boxShadow: '3px 3px 0 0 #fff',
+                            backgroundColor: '#ef4444',
+                            border: '2px solid #ef4444',
+                            boxShadow: '3px 3px 0 0 #f5f5f5',
                           },
                         }}
                       >
@@ -231,17 +231,17 @@ function App() {
                 variant="h1"
                 sx={{
                   mb: 3,
-                  color: '#00ff00',
-                  textShadow: '5px 5px 0 #ff00ff, 10px 10px 0 #ffff00',
+                  color: '#facc15',
+                  textShadow: '5px 5px 0 #ef4444, 10px 10px 0 #e8e8e8',
                 }}
               >
                 Master System Design
               </Typography>
               <Box
                 sx={{
-                  backgroundColor: '#ff00ff',
+                  backgroundColor: '#ef4444',
                   border: '4px solid #000',
-                  boxShadow: '8px 8px 0 0 #00ff00',
+                  boxShadow: '8px 8px 0 0 #facc15',
                   p: 3,
                   maxWidth: '700px',
                 }}
@@ -266,25 +266,25 @@ function App() {
               sx={{
                 backgroundColor: '#1a1a1a',
                 p: 4,
-                border: '5px solid #ffff00',
-                boxShadow: '10px 10px 0 0 #ff00ff',
+                border: '5px solid #facc15',
+                boxShadow: '10px 10px 0 0 #ef4444',
               }}
             >
               <Typography
                 variant="h2"
                 sx={{
                   mb: 3,
-                  color: '#ffff00',
-                  textShadow: '3px 3px 0 #00ffff',
+                  color: '#facc15',
+                  textShadow: '3px 3px 0 #e8e8e8',
                 }}
               >
                 {selectedTopic}
               </Typography>
-              <Typography variant="body1" sx={{ mb: 2, color: '#fff' }}>
+              <Typography variant="body1" sx={{ mb: 2, color: '#f5f5f5' }}>
                 Welcome to the System Design course! This is Phase 1 - the foundation of our
                 book-style learning platform.
               </Typography>
-              <Typography variant="body1" sx={{ mb: 2, color: '#fff' }}>
+              <Typography variant="body1" sx={{ mb: 2, color: '#f5f5f5' }}>
                 In future phases, this content area will be populated with comprehensive lessons,
                 interactive diagrams, code examples, and real-world case studies.
               </Typography>
@@ -292,9 +292,9 @@ function App() {
                 sx={{
                   mt: 4,
                   p: 3,
-                  backgroundColor: '#00ffff',
+                  backgroundColor: '#e8e8e8',
                   border: '4px solid #000',
-                  boxShadow: '6px 6px 0 0 #ff00ff',
+                  boxShadow: '6px 6px 0 0 #ef4444',
                 }}
               >
                 <Typography variant="body1" sx={{ color: '#000', fontWeight: 700 }}>
@@ -308,16 +308,16 @@ function App() {
               sx={{
                 mt: 6,
                 pt: 4,
-                borderTop: '5px solid #00ff00',
+                borderTop: '5px solid #facc15',
                 textAlign: 'center',
               }}
             >
               <Box
                 sx={{
                   display: 'inline-block',
-                  backgroundColor: '#00ff00',
+                  backgroundColor: '#facc15',
                   border: '3px solid #000',
-                  boxShadow: '5px 5px 0 0 #fff',
+                  boxShadow: '5px 5px 0 0 #f5f5f5',
                   px: 4,
                   py: 2,
                 }}
