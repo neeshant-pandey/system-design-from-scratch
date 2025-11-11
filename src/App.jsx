@@ -829,6 +829,7 @@ function App() {
             p: 0,
           }}
         >
+           <Container>
           {/* Current Topic Content - Full Width */}
           <Box
             sx={{
@@ -836,6 +837,7 @@ function App() {
               p: { xs: 3, sm: 4, md: 6 },
             }}
           >
+           
             {/* Topic Title with Accent */}
             <Box
               sx={{

@@ -138,20 +138,17 @@ Let's apply this framework to a concrete problem: designing a rate limiter that 
 
 \textbf{Algorithm (simplified):}
 
-\begin{verbatim}
-function checkRateLimit(userId):
-  currentWindow = getCurrentHourTimestamp()
-  key = userId + ":" + currentWindow
+\begin{lstlisting}[language=python]
+def fibonacci(n):
+    """Calculate the nth Fibonacci number."""
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
 
-  count = redis.incr(key)
-  if count == 1:
-    redis.expire(key, 3600)  // 1 hour TTL
-
-  if count > 1000:
-    return RATE_LIMIT_EXCEEDED
-
-  return ALLOWED
-\end{verbatim}
+# Test the function
+for i in range(10):
+    print(f"F({i}) = {fibonacci(i)}")
+\end{lstlisting}
 
 This simple design demonstrates several key concepts:
 
