@@ -87,16 +87,119 @@ const theme = createTheme({
 
 const drawerWidth = 280;
 
-// Placeholder topics structure - will be expanded in future phases
+// Complete System Design Curriculum
 const topics = [
-  { id: 1, title: 'Introduction', subtopics: ['What is System Design?', 'Why Learn System Design?'] },
-  { id: 2, title: 'Fundamentals', subtopics: ['Scalability', 'Reliability', 'Availability'] },
-  { id: 3, title: 'Components', subtopics: ['Load Balancers', 'Caching', 'Databases'] },
-  { id: 4, title: 'Patterns', subtopics: ['Microservices', 'Event-Driven', 'CQRS'] },
+  {
+    id: 1,
+    title: 'Welcome to System Design',
+    subtopics: [
+      'Intro to System Design',
+      'Estimation and Back of Envelope Calculations',
+    ],
+  },
+  {
+    id: 2,
+    title: 'Building Blocks - Communication & Data',
+    subtopics: [
+      'REST API Basics',
+      'Database Fundamentals (DBMS Basics)',
+      'Scaling Databases (Understanding DBMS for Scale)',
+      'Asynchronous Communication',
+    ],
+  },
+  {
+    id: 3,
+    title: 'Infrastructure Essentials',
+    subtopics: [
+      'Load Balancers with Nginx',
+      'Caching & Key Value Stores',
+      'Design Patterns for Scalable Systems',
+      'Rate Limiters',
+    ],
+  },
+  {
+    id: 4,
+    title: 'Cloud Infrastructure',
+    subtopics: [
+      'AWS Services Part 1',
+      'AWS Services Part 2',
+    ],
+  },
+  {
+    id: 5,
+    title: 'Your First Real Designs',
+    subtopics: [
+      'URL Shortener',
+      'Notification Service',
+      'Job Scheduling Platform',
+    ],
+  },
+  {
+    id: 6,
+    title: 'Social & Communication Platforms',
+    subtopics: [
+      'Live News Feed System',
+      'Chat System (WhatsApp)',
+      'Video Calls (Google Meet)',
+      '[Assignment] Design Tinder',
+    ],
+  },
+  {
+    id: 7,
+    title: 'Marketplace & Booking Systems',
+    subtopics: [
+      'Hotel Reservation System',
+      'Booking.com Database Design',
+      'Uber Platform',
+      '[Assignment] Yelp App',
+    ],
+  },
+  {
+    id: 8,
+    title: 'Search & Discovery',
+    subtopics: [
+      'Google Search Engine',
+      'K Heavy Hitter Problem',
+    ],
+  },
+  {
+    id: 9,
+    title: 'Media & Content Delivery',
+    subtopics: [
+      'Netflix Streaming Platform',
+      'Ad Click Event Platform',
+    ],
+  },
+  {
+    id: 10,
+    title: 'Storage & File Systems',
+    subtopics: [
+      'Dropbox / File Storage Service',
+      'File System Internals',
+      'Build Your Own Database (LSM Trees)',
+    ],
+  },
+  {
+    id: 11,
+    title: 'Distributed Systems Theory',
+    subtopics: [
+      'Consistency Models: CAP, PACELC, PIE',
+      'Consensus with Raft',
+      'AWS Dynamo DB & Redshift',
+    ],
+  },
+  {
+    id: 12,
+    title: 'Advanced Specialized Topics',
+    subtopics: [
+      'Stock Exchange Design',
+      'Big Data Processing',
+    ],
+  },
 ];
 
 function App() {
-  const [selectedTopic, setSelectedTopic] = useState('Introduction');
+  const [selectedTopic, setSelectedTopic] = useState('Intro to System Design');
 
   return (
     <ThemeProvider theme={theme}>
