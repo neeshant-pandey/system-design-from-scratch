@@ -101,6 +101,7 @@ const curriculum = [
         id: 'ch-1-1',
         title: 'Introduction to System Design',
         topics: [
+          'Understanding System Design',
           'What is System Design?',
           'Communication, Coordination & Scalability',
           'Resiliency & Maintainability',
@@ -621,7 +622,7 @@ const curriculum = [
 ];
 
 function App() {
-  const [selectedTopic, setSelectedTopic] = useState('What is System Design?');
+  const [selectedTopic, setSelectedTopic] = useState('Understanding System Design');
   const [expandedSections, setExpandedSections] = useState({ 'section-1': true });
   const [expandedChapters, setExpandedChapters] = useState({ 'ch-1-1': true });
   const [topicContent, setTopicContent] = useState(null);
